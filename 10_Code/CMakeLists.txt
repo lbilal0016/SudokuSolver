@@ -6,4 +6,4 @@ set(EXECUTABLE_NAME SudokuSolverApp)
 set(LIBRARY_NAME SudokuLib)
 
 add_subdirectory(src)
-add_subdirectory(app) 
+add_subdirectory(app)

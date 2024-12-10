@@ -71,29 +71,29 @@ include src/CMakeFiles/SudokuLib.dir/flags.make
 src/CMakeFiles/SudokuLib.dir/codegen:
 .PHONY : src/CMakeFiles/SudokuLib.dir/codegen
 
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj: src/CMakeFiles/SudokuLib.dir/flags.make
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj: src/CMakeFiles/SudokuLib.dir/includes_CXX.rsp
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj: C:/Users/levent.bilal/OneDrive\ -\ intive/Desktop/SudokuSolverProject/10_Code/src/my_lib.cc
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj: src/CMakeFiles/SudokuLib.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj -MF CMakeFiles\SudokuLib.dir\my_lib.cc.obj.d -o CMakeFiles\SudokuLib.dir\my_lib.cc.obj -c "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\my_lib.cc"
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj: src/CMakeFiles/SudokuLib.dir/flags.make
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj: src/CMakeFiles/SudokuLib.dir/includes_CXX.rsp
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj: C:/Users/levent.bilal/OneDrive\ -\ intive/Desktop/SudokuSolverProject/10_Code/src/sudokuSolver.cc
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj: src/CMakeFiles/SudokuLib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj -MF CMakeFiles\SudokuLib.dir\sudokuSolver.cc.obj.d -o CMakeFiles\SudokuLib.dir\sudokuSolver.cc.obj -c "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\sudokuSolver.cc"
 
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SudokuLib.dir/my_lib.cc.i"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\my_lib.cc" > CMakeFiles\SudokuLib.dir\my_lib.cc.i
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SudokuLib.dir/sudokuSolver.cc.i"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\sudokuSolver.cc" > CMakeFiles\SudokuLib.dir\sudokuSolver.cc.i
 
-src/CMakeFiles/SudokuLib.dir/my_lib.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SudokuLib.dir/my_lib.cc.s"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\my_lib.cc" -o CMakeFiles\SudokuLib.dir\my_lib.cc.s
+src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SudokuLib.dir/sudokuSolver.cc.s"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\src && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\src\sudokuSolver.cc" -o CMakeFiles\SudokuLib.dir\sudokuSolver.cc.s
 
 # Object files for target SudokuLib
 SudokuLib_OBJECTS = \
-"CMakeFiles/SudokuLib.dir/my_lib.cc.obj"
+"CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj"
 
 # External object files for target SudokuLib
 SudokuLib_EXTERNAL_OBJECTS =
 
-src/libSudokuLib.a: src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj
+src/libSudokuLib.a: src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj
 src/libSudokuLib.a: src/CMakeFiles/SudokuLib.dir/build.make
 src/libSudokuLib.a: src/CMakeFiles/SudokuLib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libSudokuLib.a"

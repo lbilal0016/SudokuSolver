@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "my_lib.h"
+#include "sudokuSolver.h"
 
 int main(){
 

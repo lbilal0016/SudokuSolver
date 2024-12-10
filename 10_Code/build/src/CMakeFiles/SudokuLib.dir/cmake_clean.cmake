@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SudokuLib.dir/my_lib.cc.obj"
-  "CMakeFiles/SudokuLib.dir/my_lib.cc.obj.d"
+  "CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj"
+  "CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj.d"
   "libSudokuLib.a"
   "libSudokuLib.pdb"
 )

@@ -1,4 +1,4 @@
 #pragma once
-#include "my_lib.h"
+#include "sudokuSolver.h"
 
 #define CONSTANTS 5

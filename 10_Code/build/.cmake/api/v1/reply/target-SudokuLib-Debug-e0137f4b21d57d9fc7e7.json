@@ -83,7 +83,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/my_lib.cc",
+			"path" : "src/sudokuSolver.cc",
 			"sourceGroupIndex" : 0
 		}
 	],

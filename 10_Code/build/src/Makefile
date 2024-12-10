@@ -129,29 +129,29 @@ SudokuLib/fast:
 	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/build
 .PHONY : SudokuLib/fast
 
-my_lib.obj: my_lib.cc.obj
-.PHONY : my_lib.obj
+sudokuSolver.obj: sudokuSolver.cc.obj
+.PHONY : sudokuSolver.obj
 
 # target to build an object file
-my_lib.cc.obj:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj
-.PHONY : my_lib.cc.obj
+sudokuSolver.cc.obj:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj
+.PHONY : sudokuSolver.cc.obj
 
-my_lib.i: my_lib.cc.i
-.PHONY : my_lib.i
+sudokuSolver.i: sudokuSolver.cc.i
+.PHONY : sudokuSolver.i
 
 # target to preprocess a source file
-my_lib.cc.i:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/my_lib.cc.i
-.PHONY : my_lib.cc.i
+sudokuSolver.cc.i:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.i
+.PHONY : sudokuSolver.cc.i
 
-my_lib.s: my_lib.cc.s
-.PHONY : my_lib.s
+sudokuSolver.s: sudokuSolver.cc.s
+.PHONY : sudokuSolver.s
 
 # target to generate assembly for a file
-my_lib.cc.s:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/my_lib.cc.s
-.PHONY : my_lib.cc.s
+sudokuSolver.cc.s:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.s
+.PHONY : sudokuSolver.cc.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SudokuLib
-	@echo ... my_lib.obj
-	@echo ... my_lib.i
-	@echo ... my_lib.s
+	@echo ... sudokuSolver.obj
+	@echo ... sudokuSolver.i
+	@echo ... sudokuSolver.s
 .PHONY : help
 
 

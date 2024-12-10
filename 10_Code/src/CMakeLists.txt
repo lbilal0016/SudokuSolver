@@ -1,2 +1,2 @@
-add_library(${LIBRARY_NAME} my_lib.cc)
+add_library(${LIBRARY_NAME} sudokuSolver.cc)
 target_include_directories(${LIBRARY_NAME} PUBLIC "./")
