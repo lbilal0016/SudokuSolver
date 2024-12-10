@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/src",
+  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/SudokuLib.dir/includes_CXX.rsp -g -o CMakeFiles\\SudokuLib.dir\\my_lib.cc.obj -c \"C:\\Users\\levent.bilal\\OneDrive - intive\\Desktop\\SudokuSolverProject\\10_Code\\src\\my_lib.cc\"",
+  "file": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/src/my_lib.cc",
+  "output": "src/CMakeFiles/SudokuLib.dir/my_lib.cc.obj"
+},
+{
+  "directory": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/app",
+  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/SudokuSolverApp.dir/includes_CXX.rsp -g -o CMakeFiles\\SudokuSolverApp.dir\\main.cc.obj -c \"C:\\Users\\levent.bilal\\OneDrive - intive\\Desktop\\SudokuSolverProject\\10_Code\\app\\main.cc\"",
+  "file": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/app/main.cc",
+  "output": "app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj"
+}
+]

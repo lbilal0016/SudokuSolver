@@ -1,0 +1,3 @@
+C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/temp/build/CMakeFiles/exeName.dir
+C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/temp/build/CMakeFiles/edit_cache.dir
+C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/temp/build/CMakeFiles/rebuild_cache.dir
