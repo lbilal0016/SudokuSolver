@@ -7,7 +7,9 @@
 #define NUM_ROWS 9
 #define NUM_COLUMNS 9
 #define NUM_NINTHS 9
+#define SUM_FINISHED_SUDOKU 405
 
+constexpr int NUM_POSSIBILITIES = 9;
 constexpr uint16_t BITPOS_1 = 0b0000000000000001;
 constexpr uint16_t BITPOS_2 = 0b0000000000000010;
 constexpr uint16_t BITPOS_3 = 0b0000000000000100;
@@ -52,9 +54,11 @@ class sudokuSolver{
 
         bool _isSolved;
         bool _originalsMarked;
+
+        uint16_t _bufEliminatedVals;
         
         //  This function returns vector index of a target element whose row and column is known
-        BoardIndexRange getIndexRange(int boardOneNinth);
+        void getIndexRange(BoardIndexRange &indexRange, int boardOneNinth);
 
         //  This function marks elements from sudoku itself, such that they cannot be changed
         void markOriginals();
@@ -68,13 +72,36 @@ class sudokuSolver{
         //  This function removes an impossible value from a given square
         void removeImpossibleValue(int row, int column, int value);
 
+        //  This function interpretes the bit position and return the real int value
+        void getIntValueFromBit(int &interprtdIntVal, uint16_t bitPos);
+
+        //  This function checks whether a value is known, and if so, what is the value
+        int isValueKnown(int row, int column);
+
+        //  This function checks whether a previously not known value has been found
+        int isValueFound(int row, int column);
+
         //  This function checks one-ninth regions and marks possible values to empty squares
         void checkOneNinths();
 };
 
+
+//  Project specific exception classes
 class IllegalOperationException : public std::exception{
     public:
         explicit IllegalOperationException(const std::string& message) : _message(message){
+        }
+        
+        const char * what() const noexcept override{
+            return _message.c_str();
+        }
+    private:
+        std::string _message;
+};
+
+class LogicalErrorOccured : public std::exception{
+    public:
+        explicit LogicalErrorOccured(const std::string& message) : _message(message){
         }
         
         const char * what() const noexcept override{

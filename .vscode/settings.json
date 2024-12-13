@@ -107,5 +107,6 @@
     "text_encoding": "cpp",
     "typeinfo": "cpp",
     "variant": "cpp"
-  }
+  },
+  "cmake.sourceDirectory": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code"
 }
