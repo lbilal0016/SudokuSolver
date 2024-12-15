@@ -83,6 +83,12 @@ class sudokuSolver{
 
         //  This function checks one-ninth regions and marks possible values to empty squares
         void checkOneNinths();
+
+        //  This function checks rows and marks possible values to empty squares
+        void checkRows();
+
+        //  This function checks columns and marks possible values to empty squares
+        void checkColumns();
 };
 
 
