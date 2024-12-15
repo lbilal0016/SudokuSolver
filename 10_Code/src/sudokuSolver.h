@@ -66,6 +66,9 @@ class sudokuSolver{
         //  This function checks whether an element is an original element or a solved element
         bool isOriginal(int row, int column);
 
+        //  This function checks whether an unknown element found
+        bool isFound(int row, int column);
+
         //  This function sets a possible value to a given square
         void setPossibleValue(int row, int column, int value);
 
@@ -78,7 +81,7 @@ class sudokuSolver{
         //  This function checks whether a value is known, and if so, what is the value
         int isValueKnown(int row, int column);
 
-        //  This function checks whether a previously not known value has been found
+        //  This function checks whether an unknown value has been found, edits _board and returns its value
         int isValueFound(int row, int column);
 
         //  This function checks one-ninth regions and marks possible values to empty squares

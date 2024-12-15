@@ -104,8 +104,13 @@ bool sudokuSolver::isOriginal(int row, int column){
     return _possibleValues[row][column] & MARKER_BIT != 0;
 }
 
+bool sudokuSolver::isFound(int row, int column){
+    //  If found bit is set, the value is found
+    return _possibleValues[row][column] & VALUE_FOUND_BIT != 0;
+}
+
 void sudokuSolver::setPossibleValue(int row, int column, int value){
-    if(_possibleValues[row][column] & MARKER_BIT != 0){
+    if(isOriginal(row,column)){
         throw IllegalOperationException("Exception occured: Attempt to change an original entry.");
     }else{ 
         //  set bit number value - 1 (0th bit corresponds to value 1)
@@ -115,7 +120,7 @@ void sudokuSolver::setPossibleValue(int row, int column, int value){
 
 void sudokuSolver::removeImpossibleValue(int row, int column, int value){
     //  reset bit number value - 1 (0th bit corresponds to value 1)
-    if(_possibleValues[row][column] & MARKER_BIT != 0){
+    if(isOriginal(row,column)){
         throw IllegalOperationException("Exception occured: Attempt to change an original entry.");
     }else{ 
         _possibleValues[row][column] = _possibleValues[row][column] & ~(1 << (value - 1));
@@ -139,8 +144,7 @@ void sudokuSolver::getIntValueFromBit(int &interprtdIntVal, uint16_t bitPos){
 
 int sudokuSolver::isValueKnown(int row, int column){
     int knownValue = 0;
-    if((_possibleValues[row][column] & MARKER_BIT != 0) || 
-    (_possibleValues[row][column] & VALUE_FOUND_BIT != 0)){
+    if(isOriginal(row,column) || isFound(row,column)){
         uint16_t valueBuf = _possibleValues[row][column] & ALLBITS;
         getIntValueFromBit(knownValue, valueBuf);
     }
@@ -148,8 +152,7 @@ int sudokuSolver::isValueKnown(int row, int column){
 }
 
 int sudokuSolver::isValueFound(int row, int column){
-    if((_possibleValues[row][column] & MARKER_BIT != 0) ||
-        (_possibleValues[row][column] & VALUE_FOUND_BIT != 0)){
+    if(isOriginal(row,column) || isFound(row,column)){
         //  Function called although value of the square is known
             throw LogicalErrorOccured("Logical error: isValueKnown function called while value of a square is known");        
     }
