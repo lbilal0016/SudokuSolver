@@ -8,6 +8,7 @@ sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _is
     _originalsMarked = false;
 
     _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
+    _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
     markOriginals();
 }
 
@@ -18,6 +19,7 @@ sudokuSolver::sudokuSolver(){
     //  shaping member vectors
     _board.resize(NUM_ROWS, std::vector<int>(NUM_COLUMNS, 0));  //  shaping NUM_ROWS x NUM_COLUMNS board vector
     _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
+    _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
 }
 
 BoardType sudokuSolver::solvePuzzle(BoardType &Board){
@@ -202,6 +204,8 @@ void sudokuSolver::checkOneNinths(){
     for(int i = 1; i <= NUM_NINTHS; ++i){
         // empty eliminated values buffer for current one-ninth
         _bufEliminatedVals = 0; 
+        //  resets the index for unknown elements vector 
+        _nextElementUnknownValsVec = 0;
         //  get the index range for current one-ninth
         getIndexRange(indexRange, i);
 
@@ -212,26 +216,28 @@ void sudokuSolver::checkOneNinths(){
                 if(isValueKnown(j,k) != 0){
                     //  set known elements in a uint16_t buffer (base 1)
                     _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(j,k) - 1));
+                }else{
+                    //  save squares whose values are currently not known
+                    _indexVecUnknownVals[_nextElementUnknownValsVec++] = {j,k};
                 }
             }
         }
-        //  Eliminate previously determined values from the same one-ninth
-        for(int j = indexRange.rowFirst; j <= indexRange.rowLast; ++j){
-            for(int k = indexRange.columnFirst; k <= indexRange.columnLast; ++k){
-                if(isValueKnown(j,k) == 0){
-                    _possibleValues[j][k] &= ~(_bufEliminatedVals);
-                    //  After elimination, check if the value is found for the current square
-                    if(isValueFound(j,k) != 0){
-                        //  set the bit for found values
-                        _possibleValues[j][k] |= VALUE_FOUND_BIT;
-                    }
-                }
+
+        //  Eliminate previously determined values from unknown squares of the same one-ninth
+        for(int i = 0; i < _nextElementUnknownValsVec; ++i){
+            int row = _indexVecUnknownVals[i].row;
+            int column = _indexVecUnknownVals[i].column;
+            _possibleValues[row][column] &= ~(_bufEliminatedVals);
+            if(isValueFound(row, column) !=  0){
+                //  set the bit for found values
+                _possibleValues[row][column] |= VALUE_FOUND_BIT;
             }
-        }
+        } 
     }
 }
 
 void sudokuSolver::checkRows(){
+    //  TODO: IMPLEMENT THE MORE EFFICIENT METHOD OF ELIMINATING PREVIOUSLY DETERMINED VALUES TO THIS METHOD
     for(int i = 0; i < NUM_ROWS; ++i){
         //  reset bit buffer for eliminated values
         _bufEliminatedVals = 0;
@@ -255,6 +261,8 @@ void sudokuSolver::checkRows(){
 }
 
 void sudokuSolver::checkColumns(){
+    //  TODO: IMPLEMENT THE MORE EFFICIENT METHOD OF ELIMINATING PREVIOUSLY DETERMINED VALUES TO THIS METHOD
+
     //  i and j are intentionally swapped for vector convention 
     //  i represents rows, while j represents columns
     for(int j = 0; j < NUM_COLUMNS; ++j){

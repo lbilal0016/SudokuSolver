@@ -34,6 +34,11 @@ struct BoardIndexRange
     int columnLast; //  last column index for one ninth of board
 };
 
+//  This struct will be used to hold indexes of unknown values
+struct IndexUnknownVals{
+    int row;
+    int column;
+};
 
 class sudokuSolver{
     public:
@@ -56,6 +61,9 @@ class sudokuSolver{
         bool _originalsMarked;
 
         uint16_t _bufEliminatedVals;
+        std::vector<IndexUnknownVals> _indexVecUnknownVals;
+        int _nextElementUnknownValsVec;
+
         
         //  This function returns vector index of a target element whose row and column is known
         void getIndexRange(BoardIndexRange &indexRange, int boardOneNinth);
