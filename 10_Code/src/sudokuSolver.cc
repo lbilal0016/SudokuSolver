@@ -237,51 +237,60 @@ void sudokuSolver::checkOneNinths(){
 }
 
 void sudokuSolver::checkRows(){
-    //  TODO: IMPLEMENT THE MORE EFFICIENT METHOD OF ELIMINATING PREVIOUSLY DETERMINED VALUES TO THIS METHOD
     for(int i = 0; i < NUM_ROWS; ++i){
         //  reset bit buffer for eliminated values
         _bufEliminatedVals = 0;
+        //  resets the index for unknown elements vector 
+        _nextElementUnknownValsVec = 0;
         //  Find to be eliminated values for ith row
         for(int j = 0; j < NUM_COLUMNS; ++j){
             if(isValueKnown(i,j) != 0){
                 //  set known elements in a uint16_t buffer (base 1)
                 _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(i,j) - 1));
+            }else{
+                //  save squares whose values are currently not known
+                _indexVecUnknownVals[_nextElementUnknownValsVec++] = {i,j};
             }
         }
+
         //  Eliminate previously determined values from empty elements of ith row
-        for(int j = 0; j < NUM_COLUMNS; ++j){
-            _possibleValues[i][j] &= ~(_bufEliminatedVals);
-            //  After elimination, check if the value is found for the current square
-            if(isValueFound(i,j) != 0){
-                //  set the bit for found values
-                _possibleValues[i][j] |= VALUE_FOUND_BIT;
+        for(int i = 0; i < _nextElementUnknownValsVec; ++i){
+            int row = _indexVecUnknownVals[i].row;
+            int column = _indexVecUnknownVals[i].column;
+            _possibleValues[row][column] &= ~(_bufEliminatedVals);
+            if(isValueFound(row,column) != 0){
+                // set the bit for found values
+                _possibleValues[row][column] |= VALUE_FOUND_BIT;
             }
         }
     }
 }
 
 void sudokuSolver::checkColumns(){
-    //  TODO: IMPLEMENT THE MORE EFFICIENT METHOD OF ELIMINATING PREVIOUSLY DETERMINED VALUES TO THIS METHOD
-
     //  i and j are intentionally swapped for vector convention 
     //  i represents rows, while j represents columns
     for(int j = 0; j < NUM_COLUMNS; ++j){
         //  reset bit buffer for eliminated values
         _bufEliminatedVals = 0;
+        //  resets the index for unknown elements vector 
+        _nextElementUnknownValsVec = 0;
         //  Find to be eliminated values for jth column
         for(int i = 0; i < NUM_ROWS; ++i){
             if(isValueKnown(i,j) != 0){
                 //  set known elements in a uint16_t buffer (base 1)
                 _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(i,j) - 1));
+            }else{
+                _indexVecUnknownVals[_nextElementUnknownValsVec++] = {i,j};
             }
         }
+
         //  Eliminate previously determined values from empty elements of jth column
-        for(int i = 0; i < NUM_ROWS; ++i){
-            _possibleValues[i][j] &= ~(_bufEliminatedVals);
-            //  After elimination, check if the value is found for the current square
-            if(isValueFound(i,j) != 0){
-                //  set the bit for found values
-                _possibleValues[i][j] |= VALUE_FOUND_BIT;
+        for(int i = 0; i < _nextElementUnknownValsVec; ++i){
+            int row = _indexVecUnknownVals[i].row;
+            int column = _indexVecUnknownVals[i].column;
+            _possibleValues[row][column] &= ~(_bufEliminatedVals);
+            if(isValueFound(row,column) != 0){
+                _possibleValues[row][column] |= VALUE_FOUND_BIT;
             }
         }
     }
