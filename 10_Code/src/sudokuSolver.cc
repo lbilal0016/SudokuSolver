@@ -4,8 +4,10 @@
 
 sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _isSolved(isSolved) {
     //  ToDo: Some False argument check
-    
     _originalsMarked = false;
+    _completedColumns = 0;
+    _completedRows = 0;
+    _completedOneNinths = 0;
 
     _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
     _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
@@ -15,6 +17,9 @@ sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _is
 sudokuSolver::sudokuSolver(){
     _originalsMarked = false;
     _isSolved = false;
+    _completedColumns = 0;
+    _completedRows = 0;
+    _completedOneNinths = 0;
 
     //  shaping member vectors
     _board.resize(NUM_ROWS, std::vector<int>(NUM_COLUMNS, 0));  //  shaping NUM_ROWS x NUM_COLUMNS board vector
@@ -200,12 +205,19 @@ int sudokuSolver::isValueFound(int row, int column){
 
 void sudokuSolver::checkOneNinths(){
     BoardIndexRange indexRange;
+    int bufKnownValCounter;
 
     for(int i = 1; i <= NUM_NINTHS; ++i){
+        if((_completedOneNinths & (1 << (i - 1))) != 0){
+            //  skip one-ninth if it is completed
+            continue;
+        }
         // empty eliminated values buffer for current one-ninth
         _bufEliminatedVals = 0; 
         //  resets the index for unknown elements vector 
         _nextElementUnknownValsVec = 0;
+        //  resets the counter for known values
+        bufKnownValCounter = 0;
         //  get the index range for current one-ninth
         getIndexRange(indexRange, i);
 
@@ -216,6 +228,10 @@ void sudokuSolver::checkOneNinths(){
                 if(isValueKnown(j,k) != 0){
                     //  set known elements in a uint16_t buffer (base 1)
                     _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(j,k) - 1));
+                    if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                        //  Increase bufKnownValCounter and if it is equal to 9, mark the one-ninth as full
+                        _completedOneNinths |= (1 << (i - 1));
+                    }
                 }else{
                     //  save squares whose values are currently not known
                     _indexVecUnknownVals[_nextElementUnknownValsVec++] = {j,k};
@@ -231,22 +247,38 @@ void sudokuSolver::checkOneNinths(){
             if(isValueFound(row, column) !=  0){
                 //  set the bit for found values
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
+                if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                    //  Increase bufKnownValCounter and if it is equal to 9, mark the one-ninth as full
+                    _completedOneNinths |= (1 << (i - 1));
+                }                
             }
         } 
     }
 }
 
 void sudokuSolver::checkRows(){
+    int bufKnownValCounter;
     for(int i = 0; i < NUM_ROWS; ++i){
+        if((_completedRows & (1 << (i - 1))) != 0){
+            //  skip one-ninth if it is completed
+            continue;
+        }
         //  reset bit buffer for eliminated values
         _bufEliminatedVals = 0;
         //  resets the index for unknown elements vector 
         _nextElementUnknownValsVec = 0;
+        //  resets the counter for known values
+        bufKnownValCounter = 0;
+
         //  Find to be eliminated values for ith row
         for(int j = 0; j < NUM_COLUMNS; ++j){
             if(isValueKnown(i,j) != 0){
                 //  set known elements in a uint16_t buffer (base 1)
                 _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(i,j) - 1));
+                if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                    //  Increase bufKnownValCounter and if it is equal to 9, mark the row as full
+                    _completedRows |= (1 << (i - 1));
+                }
             }else{
                 //  save squares whose values are currently not known
                 _indexVecUnknownVals[_nextElementUnknownValsVec++] = {i,j};
@@ -261,6 +293,10 @@ void sudokuSolver::checkRows(){
             if(isValueFound(row,column) != 0){
                 // set the bit for found values
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
+                if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                    //  Increase bufKnownValCounter and if it is equal to 9, mark the row as full
+                    _completedRows |= (1 << (i - 1));                    
+                }
             }
         }
     }
@@ -269,16 +305,29 @@ void sudokuSolver::checkRows(){
 void sudokuSolver::checkColumns(){
     //  i and j are intentionally swapped for vector convention 
     //  i represents rows, while j represents columns
+    int bufKnownValCounter;
+
     for(int j = 0; j < NUM_COLUMNS; ++j){
+        if((_completedColumns & (1 << (j - 1))) != 0){
+            //  skip one-ninth if it is completed
+            continue;
+        }
         //  reset bit buffer for eliminated values
         _bufEliminatedVals = 0;
         //  resets the index for unknown elements vector 
         _nextElementUnknownValsVec = 0;
+        //  resets the counter for known values
+        bufKnownValCounter = 0;
+
         //  Find to be eliminated values for jth column
         for(int i = 0; i < NUM_ROWS; ++i){
             if(isValueKnown(i,j) != 0){
                 //  set known elements in a uint16_t buffer (base 1)
                 _bufEliminatedVals = _bufEliminatedVals | (1 << (isValueKnown(i,j) - 1));
+                if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                    //  Increase bufKnownValCounter and if it is equal to 9, mark the column as full
+                    _completedColumns |= (1 << (j - 1));
+                }
             }else{
                 _indexVecUnknownVals[_nextElementUnknownValsVec++] = {i,j};
             }
@@ -291,6 +340,10 @@ void sudokuSolver::checkColumns(){
             _possibleValues[row][column] &= ~(_bufEliminatedVals);
             if(isValueFound(row,column) != 0){
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
+                if((++bufKnownValCounter) == NUM_POSSIBILITIES){
+                    //  Increase bufKnownValCounter and if it is equal to 9, mark the column as full
+                    _completedColumns |= (1 << (j - 1));
+                }
             }
         }
     }

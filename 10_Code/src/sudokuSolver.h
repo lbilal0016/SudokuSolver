@@ -23,6 +23,36 @@ constexpr uint16_t ALLBITS = 0b0000000111111111;
 constexpr uint16_t MARKER_BIT = 0b1000000000000000;
 constexpr uint16_t VALUE_FOUND_BIT = 0b0100000000000000;
 
+constexpr uint16_t ROW1 = 0b0000000000000001;
+constexpr uint16_t ROW2 = 0b0000000000000010;
+constexpr uint16_t ROW3 = 0b0000000000000100;
+constexpr uint16_t ROW4 = 0b0000000000001000;
+constexpr uint16_t ROW5 = 0b0000000000010000;
+constexpr uint16_t ROW6 = 0b0000000000100000;
+constexpr uint16_t ROW7 = 0b0000000001000000;
+constexpr uint16_t ROW8 = 0b0000000010000000;
+constexpr uint16_t ROW9 = 0b0000000100000000;
+
+constexpr uint16_t COLUMN1 = 0b0000000000000001;
+constexpr uint16_t COLUMN2 = 0b0000000000000010;
+constexpr uint16_t COLUMN3 = 0b0000000000000100;
+constexpr uint16_t COLUMN4 = 0b0000000000001000;
+constexpr uint16_t COLUMN5 = 0b0000000000010000;
+constexpr uint16_t COLUMN6 = 0b0000000000100000;
+constexpr uint16_t COLUMN7 = 0b0000000001000000;
+constexpr uint16_t COLUMN8 = 0b0000000010000000;
+constexpr uint16_t COLUMN9 = 0b0000000100000000;
+
+constexpr uint16_t SUBGRID1 = 0b0000000000000001;
+constexpr uint16_t SUBGRID2 = 0b0000000000000010;
+constexpr uint16_t SUBGRID3 = 0b0000000000000100;
+constexpr uint16_t SUBGRID4 = 0b0000000000001000;
+constexpr uint16_t SUBGRID5 = 0b0000000000010000;
+constexpr uint16_t SUBGRID6 = 0b0000000000100000;
+constexpr uint16_t SUBGRID7 = 0b0000000001000000;
+constexpr uint16_t SUBGRID8 = 0b0000000010000000;
+constexpr uint16_t SUBGRID9 = 0b0000000100000000;
+
 using BoardType = std::vector<std::vector<int>>;
 using BoardPosType = std::vector<std::vector<uint16_t>>;
 
@@ -61,6 +91,10 @@ class sudokuSolver{
         bool _originalsMarked;
 
         uint16_t _bufEliminatedVals;
+        uint16_t _completedRows;
+        uint16_t _completedColumns;
+        uint16_t _completedOneNinths;
+        
         std::vector<IndexUnknownVals> _indexVecUnknownVals;
         int _nextElementUnknownValsVec;
 
