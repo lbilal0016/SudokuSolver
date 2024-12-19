@@ -1,0 +1,26 @@
+Noch ein Zusatz zu der Aufgabe, es gab Nachfragen
+ 
+So soll der "sudokusolver" aufgerufen werden
+sudokusolver.exe 530070000600195000098000060800060003400800005060000280000000060005025000130060000
+ 
+0 bedeutet leeres Feld
+Reihenfolge der Zahlen: 
+erste Zahl oberste Reihe links, 
+jetzt zeilenweise von links nach rechts und von oben nach unten 
+ 
+z.B. 530070000600195000098000060800060003400800005060000280000000060005025000130060000
+ 
+ 
+530 070 000
+600 195 000
+098 000 060
+ 
+800 060 003
+400 800 005
+060 000 280
+ 
+000 000 060
+005 025 000
+130 060 000
+ 
+Ausgabe der Lösung über die Kommandozeile als string ähnlich zur Eingabe 
