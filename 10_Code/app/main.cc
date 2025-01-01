@@ -4,8 +4,20 @@
 #include "DoublyLinkedList.h"
 
 int main(){
+    // Example input matrix
+    std::vector<std::vector<int>> matrix = {
+        {1, 0, 0, 1, 0, 0},
+        {0, 1, 0, 1, 0, 0},
+        {0, 0, 1, 0, 1, 1},
+        {1, 0, 0, 0, 1, 0},
+        {0, 1, 1, 0, 0, 1}
+    };
 
-    std::cout << TEST;
-    
+    // Create DLX instance
+    DLX dlx(matrix);
+
+    // Print the structure
+    dlx.print();
+
     return 0;
 }
