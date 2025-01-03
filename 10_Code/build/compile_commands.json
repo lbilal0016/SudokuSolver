@@ -13,8 +13,8 @@
 },
 {
   "directory": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/app",
-  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/SudokuSolverApp.dir/includes_CXX.rsp -g -o CMakeFiles\\SudokuSolverApp.dir\\main.cc.obj -c \"C:\\Users\\levent.bilal\\OneDrive - intive\\Desktop\\SudokuSolverProject\\10_Code\\app\\main.cc\"",
-  "file": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/app/main.cc",
-  "output": "app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj"
+  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/SudokuSolverApp.dir/includes_CXX.rsp -g -o CMakeFiles\\SudokuSolverApp.dir\\main.cpp.obj -c \"C:\\Users\\levent.bilal\\OneDrive - intive\\Desktop\\SudokuSolverProject\\10_Code\\app\\main.cpp\"",
+  "file": "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/app/main.cpp",
+  "output": "app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj"
 }
 ]

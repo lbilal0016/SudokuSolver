@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/app/main.cc" "app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj" "gcc" "app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj.d"
+  "C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/app/main.cpp" "app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj" "gcc" "app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

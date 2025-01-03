@@ -6,18 +6,19 @@
 int main(){
     // Example input matrix
     std::vector<std::vector<int>> matrix = {
-        {1, 0, 0, 1, 0, 0},
-        {0, 1, 0, 1, 0, 0},
-        {0, 0, 1, 0, 1, 1},
-        {1, 0, 0, 0, 1, 0},
-        {0, 1, 1, 0, 0, 1}
+        {0, 0, 1, 0, 1, 1, 0},
+        {1, 0, 0, 1, 0, 0, 1},
+        {0, 1, 1, 0, 0, 1, 0},
+        {1, 0, 0, 1, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0, 1},
+        {0, 0, 0, 1, 1, 0, 1}
     };
 
     // Create DLX instance
     DLX dlx(matrix);
 
     //  test the cover and uncover functions
-    dlx.testCoverUncover(1);
+    dlx.testCoverUncover(0);
 
     // Print the structure
     std::cout << "\nPrinting the original DLX Structure..." << std::endl;

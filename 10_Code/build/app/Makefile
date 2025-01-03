@@ -129,29 +129,29 @@ SudokuSolverApp/fast:
 	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/build
 .PHONY : SudokuSolverApp/fast
 
-main.obj: main.cc.obj
+main.obj: main.cpp.obj
 .PHONY : main.obj
 
 # target to build an object file
-main.cc.obj:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj
-.PHONY : main.cc.obj
+main.cpp.obj:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj
+.PHONY : main.cpp.obj
 
-main.i: main.cc.i
+main.i: main.cpp.i
 .PHONY : main.i
 
 # target to preprocess a source file
-main.cc.i:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cc.i
-.PHONY : main.cc.i
+main.cpp.i:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main.s: main.cc.s
+main.s: main.cpp.s
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.cc.s:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cc.s
-.PHONY : main.cc.s
+main.cpp.s:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f app\CMakeFiles\SudokuSolverApp.dir\build.make app/CMakeFiles/SudokuSolverApp.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:

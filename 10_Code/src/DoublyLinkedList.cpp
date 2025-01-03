@@ -12,6 +12,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix){
         DLXNode* col = new DLXNode(COLUMN_HEADER_ROW,i);
         columnHeaders[i] = col;
         prev->right = col;
+        prev->column = prev;
         col->left = prev;
         prev = col;
     }
@@ -125,6 +126,10 @@ void DLX::testCoverUncover(int colID){
 }
 
 void DLX::search(int searchDepth){
+    /*  Debugging line:
+    std::cout << "Search depth: " << searchDepth << std::endl;
+    */
+
     //  Check if a solution has already been found
     if(header->right == header){
         printSolution();    //  TODO: Not implemented yet!
@@ -132,14 +137,30 @@ void DLX::search(int searchDepth){
         return;
     }
 
-    DLXNode* column = chooseColumn();    //  TODO: Not implemented yet!
+    DLXNode* column = chooseColumn();//header->right;    //  TODO: Not implemented yet!
     
     for(DLXNode* row = column->down; row != column; row = row->down){
+        /*  Debugging line:
+        std::cout << "Selected column: " << column->columnID << std::endl;
+        */
+
         //  add this row to the solution set, assuming it is a valid solution
         solutionSet.push_back(row);
+        //  cover the column in which solution is assumed
+        column->left->right = column->right;
+        column->right->left = column->left;
         for(DLXNode* node = row->right; node != row; node = node->right){
-            coverColumn(node->column);
+            coverColumn(node->column);            
         }
+
+        /*  Debugging Line
+        std::cout << "Remaining columns: ";
+        for(DLXNode* columns = header->right; columns != header; columns = columns->right){
+            std::cout << columns->columnID << " ";
+        }
+        std::cout << std::endl;
+        */
+
         /*  after the matrix is reduced, repeat the steps with a reduced matrix,
             until a search function returns with or without a valid solution
         */
@@ -151,12 +172,20 @@ void DLX::search(int searchDepth){
         for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){
             uncoverColumn(node->column);
         }
+
+        //  uncover the column in which solution has just been sought
+        column->left->right = column;
+        column->right->left = column;
     }
     /*  if in any depth, a column not has no elements remaining downwards, 
     the outer for loop is skipped and search function will return without a valid solution at this point
     */
+
+   /*   Debugging Line:
     std::cout << "Matrix element [" << solutionSet.front()->rowID <<
     ", " << solutionSet.front()->columnID << "] is not a valid solution.\n";
+    */
+   
     return;
 }
 
@@ -195,16 +224,16 @@ void DLX::uncoverColumn(DLXNode* column){
 
 void DLX::printSolution(){
     std::cout << "A solution for exact cover problem has been found!\n";
-    std::cout << "Solution Number: " << numValidSolutions;
-    std::cout << "==================================================\n";
+    std::cout << "Solution Number: " << ++numValidSolutions;
+    std::cout << "\n==================================================\n";
     for(DLXNode* solutionElement : solutionSet){
         std::cout << "Row " << solutionElement->rowID << " covers columns: ";
         std::cout << solutionElement->columnID;
         for(DLXNode* node = solutionElement->right; node != solutionElement; node = node->right){
             std::cout << ", " << node->columnID; 
         }
+        std::cout << std::endl;
     }
-    ++numValidSolutions;
 } //  TODO
 
 DLXNode* DLX::chooseColumn(){
