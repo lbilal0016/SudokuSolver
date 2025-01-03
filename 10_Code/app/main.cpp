@@ -18,13 +18,15 @@ int main(){
     DLX dlx(matrix);
 
     //  test the cover and uncover functions
-    dlx.testCoverUncover(0);
+    //dlx.testCoverUncover(0);
 
     // Print the structure
+    /*
     std::cout << "\nPrinting the original DLX Structure..." << std::endl;
     std::cout << "=========================================" << std::endl;
     dlx.print();
-
+    */
+   
     dlx.search(0);
 
     return 0;
