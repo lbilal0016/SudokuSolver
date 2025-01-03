@@ -1,6 +1,7 @@
 #include "DoublyLinkedList.h"
 
 DLX::DLX(const std::vector<std::vector<int>>& matrix){
+    numValidSolutions = 0;
     int numColumns = matrix[0].size();
     header = new DLXNode();
     columnHeaders.resize(numColumns);
@@ -191,3 +192,37 @@ void DLX::uncoverColumn(DLXNode* column){
     column->left->right = column;
     column->right->left = column;
 }
+
+void DLX::printSolution(){
+    std::cout << "A solution for exact cover problem has been found!\n";
+    std::cout << "Solution Number: " << numValidSolutions;
+    std::cout << "==================================================\n";
+    for(DLXNode* solutionElement : solutionSet){
+        std::cout << "Row " << solutionElement->rowID << " covers columns: ";
+        std::cout << solutionElement->columnID;
+        for(DLXNode* node = solutionElement->right; node != solutionElement; node = node->right){
+            std::cout << ", " << node->columnID; 
+        }
+    }
+    ++numValidSolutions;
+} //  TODO
+
+DLXNode* DLX::chooseColumn(){
+    DLXNode* bestColumn = nullptr;
+    int minColSizeSoFar = INT_MAX;
+
+    for(DLXNode* column = header->right; column != header; column = column->right){
+        //  determine the size of the current column
+        int columnSize = 0;
+        for(DLXNode* node = column->down; node != column; node = node->down){
+            ++columnSize;
+        }
+        //  check if the current column has the least number of elements so far
+        if(columnSize < minColSizeSoFar){
+            minColSizeSoFar = columnSize;
+            bestColumn = column;
+        }
+    }
+    return bestColumn;
+}
+

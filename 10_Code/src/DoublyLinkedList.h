@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <stdexcept>
 #include <iostream>
+#include <climits>
 
 constexpr int INVALID_ROW = -999; // invalid row index
 constexpr int INVALID_COLUMN = -999; // invalid column index
@@ -35,12 +36,13 @@ class DLX{
     void testCoverUncover(int colID);
 
     //  This method searches for possible solutions for a given exact cover problem
-    void search();
+    void search(int searchDepth);
 
     private:
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
     std::vector<DLXNode*> solutionSet;
+    int numValidSolutions;
 
     //  this method adds a new row to the DLX structure
     void addRow(int rowID, const std::vector<int>& columns);

@@ -24,5 +24,7 @@ int main(){
     std::cout << "=========================================" << std::endl;
     dlx.print();
 
+    dlx.search(0);
+
     return 0;
 }
