@@ -16,7 +16,12 @@ int main(){
     // Create DLX instance
     DLX dlx(matrix);
 
+    //  test the cover and uncover functions
+    dlx.testCoverUncover(1);
+
     // Print the structure
+    std::cout << "\nPrinting the original DLX Structure..." << std::endl;
+    std::cout << "=========================================" << std::endl;
     dlx.print();
 
     return 0;

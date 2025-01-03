@@ -129,29 +129,53 @@ SudokuLib/fast:
 	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/build
 .PHONY : SudokuLib/fast
 
-sudokuSolver.obj: sudokuSolver.cc.obj
+DoublyLinkedList.obj: DoublyLinkedList.cpp.obj
+.PHONY : DoublyLinkedList.obj
+
+# target to build an object file
+DoublyLinkedList.cpp.obj:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.obj
+.PHONY : DoublyLinkedList.cpp.obj
+
+DoublyLinkedList.i: DoublyLinkedList.cpp.i
+.PHONY : DoublyLinkedList.i
+
+# target to preprocess a source file
+DoublyLinkedList.cpp.i:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.i
+.PHONY : DoublyLinkedList.cpp.i
+
+DoublyLinkedList.s: DoublyLinkedList.cpp.s
+.PHONY : DoublyLinkedList.s
+
+# target to generate assembly for a file
+DoublyLinkedList.cpp.s:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.s
+.PHONY : DoublyLinkedList.cpp.s
+
+sudokuSolver.obj: sudokuSolver.cpp.obj
 .PHONY : sudokuSolver.obj
 
 # target to build an object file
-sudokuSolver.cc.obj:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj
-.PHONY : sudokuSolver.cc.obj
+sudokuSolver.cpp.obj:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.obj
+.PHONY : sudokuSolver.cpp.obj
 
-sudokuSolver.i: sudokuSolver.cc.i
+sudokuSolver.i: sudokuSolver.cpp.i
 .PHONY : sudokuSolver.i
 
 # target to preprocess a source file
-sudokuSolver.cc.i:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.i
-.PHONY : sudokuSolver.cc.i
+sudokuSolver.cpp.i:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.i
+.PHONY : sudokuSolver.cpp.i
 
-sudokuSolver.s: sudokuSolver.cc.s
+sudokuSolver.s: sudokuSolver.cpp.s
 .PHONY : sudokuSolver.s
 
 # target to generate assembly for a file
-sudokuSolver.cc.s:
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cc.s
-.PHONY : sudokuSolver.cc.s
+sudokuSolver.cpp.s:
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build && $(MAKE) $(MAKESILENT) -f src\CMakeFiles\SudokuLib.dir\build.make src/CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.s
+.PHONY : sudokuSolver.cpp.s
 
 # Help Target
 help:
@@ -162,6 +186,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... SudokuLib
+	@echo ... DoublyLinkedList.obj
+	@echo ... DoublyLinkedList.i
+	@echo ... DoublyLinkedList.s
 	@echo ... sudokuSolver.obj
 	@echo ... sudokuSolver.i
 	@echo ... sudokuSolver.s
