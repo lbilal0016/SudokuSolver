@@ -1,2 +1,2 @@
-C:\mingw64\bin\ar.exe qc libSudokuLib.a CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj
+C:\mingw64\bin\ar.exe qc libSudokuLib.a CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.obj CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.obj
 C:\mingw64\bin\ranlib.exe libSudokuLib.a

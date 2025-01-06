@@ -82,3 +82,52 @@ void DLX::print(){
         }
     }
 }
+
+void DLX::testCoverUncover(int colID){
+    DLXNode* columnHeader = columnHeaders[colID];
+
+    std::cout << "Starting Cover/Uncover method testing ..." << std::endl;
+    std::cout << "DLX Structure before covering column " << colID << std::endl;
+    print();
+    std::cout << std::endl;
+    coverColumn(columnHeader);
+    std::cout << "DLX Structure after covering column " << colID << std::endl;
+    print();
+    std::cout << std::endl;
+    uncoverColumn(columnHeader);
+    std::cout << "DLX Structure after uncovering column " << colID << std::endl;
+    print();
+}
+
+void DLX::coverColumn(DLXNode* column){
+    column->left->right = column->right;
+    column->right->left = column->left;
+
+    //  apply this for all rows as long as row is not equal to column
+    for(DLXNode* row = column->down; row != column; row = row->down){
+        //  suppress all other nodes in current row
+        /*  It is important to note that links are only overwritten in vertical direction
+            horizontal links remain intact (node->right / node->left) to leave some
+            access to the node that is currently being deleted (or rather suppressed)
+        */
+        for(DLXNode* node = row->right; node != row; node = node->right){
+            node->up->down = node->down;
+            node->down->up = node->up;
+        }
+    }
+}
+
+void DLX::uncoverColumn(DLXNode* column){
+    //  reverse the outer for loop in coverColumn method
+    for(DLXNode* row = column->up; row != column; row = row->up){
+        //  reverse the inner for loop in coverColumn method
+        for(DLXNode* node = row->left; node != row; node = node->left){
+           node->up->down = node;
+           node->down->up = node;         
+        }
+    }
+
+    //  update column header links (make suppressed column header reappear)
+    column->left->right = column;
+    column->right->left = column;
+}

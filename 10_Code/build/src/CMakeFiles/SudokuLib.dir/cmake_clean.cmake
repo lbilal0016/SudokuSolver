@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj"
-  "CMakeFiles/SudokuLib.dir/sudokuSolver.cc.obj.d"
+  "CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.obj"
+  "CMakeFiles/SudokuLib.dir/DoublyLinkedList.cpp.obj.d"
+  "CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.obj"
+  "CMakeFiles/SudokuLib.dir/sudokuSolver.cpp.obj.d"
   "libSudokuLib.a"
   "libSudokuLib.pdb"
 )

@@ -71,29 +71,29 @@ include app/CMakeFiles/SudokuSolverApp.dir/flags.make
 app/CMakeFiles/SudokuSolverApp.dir/codegen:
 .PHONY : app/CMakeFiles/SudokuSolverApp.dir/codegen
 
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj: app/CMakeFiles/SudokuSolverApp.dir/flags.make
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj: app/CMakeFiles/SudokuSolverApp.dir/includes_CXX.rsp
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj: C:/Users/levent.bilal/OneDrive\ -\ intive/Desktop/SudokuSolverProject/10_Code/app/main.cc
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj: app/CMakeFiles/SudokuSolverApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj -MF CMakeFiles\SudokuSolverApp.dir\main.cc.obj.d -o CMakeFiles\SudokuSolverApp.dir\main.cc.obj -c "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cc"
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj: app/CMakeFiles/SudokuSolverApp.dir/flags.make
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj: app/CMakeFiles/SudokuSolverApp.dir/includes_CXX.rsp
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj: C:/Users/levent.bilal/OneDrive\ -\ intive/Desktop/SudokuSolverProject/10_Code/app/main.cpp
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj: app/CMakeFiles/SudokuSolverApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj -MF CMakeFiles\SudokuSolverApp.dir\main.cpp.obj.d -o CMakeFiles\SudokuSolverApp.dir\main.cpp.obj -c "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cpp"
 
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SudokuSolverApp.dir/main.cc.i"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cc" > CMakeFiles\SudokuSolverApp.dir\main.cc.i
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SudokuSolverApp.dir/main.cpp.i"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cpp" > CMakeFiles\SudokuSolverApp.dir\main.cpp.i
 
-app/CMakeFiles/SudokuSolverApp.dir/main.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SudokuSolverApp.dir/main.cc.s"
-	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cc" -o CMakeFiles\SudokuSolverApp.dir\main.cc.s
+app/CMakeFiles/SudokuSolverApp.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SudokuSolverApp.dir/main.cpp.s"
+	cd /d C:\Users\LEVENT~1.BIL\ONEDRI~1\Desktop\SUDOKU~1\10_Code\build\app && C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\levent.bilal\OneDrive - intive\Desktop\SudokuSolverProject\10_Code\app\main.cpp" -o CMakeFiles\SudokuSolverApp.dir\main.cpp.s
 
 # Object files for target SudokuSolverApp
 SudokuSolverApp_OBJECTS = \
-"CMakeFiles/SudokuSolverApp.dir/main.cc.obj"
+"CMakeFiles/SudokuSolverApp.dir/main.cpp.obj"
 
 # External object files for target SudokuSolverApp
 SudokuSolverApp_EXTERNAL_OBJECTS =
 
-app/SudokuSolverApp.exe: app/CMakeFiles/SudokuSolverApp.dir/main.cc.obj
+app/SudokuSolverApp.exe: app/CMakeFiles/SudokuSolverApp.dir/main.cpp.obj
 app/SudokuSolverApp.exe: app/CMakeFiles/SudokuSolverApp.dir/build.make
 app/SudokuSolverApp.exe: src/libSudokuLib.a
 app/SudokuSolverApp.exe: app/CMakeFiles/SudokuSolverApp.dir/linkLibs.rsp
