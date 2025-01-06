@@ -10,6 +10,9 @@
 constexpr int INVALID_ROW = -999; // invalid row index
 constexpr int INVALID_COLUMN = -999; // invalid column index
 constexpr int COLUMN_HEADER_ROW = -1; // row index value for column headers in DLX data structure
+constexpr int NUM_CELLS = 81;   //  total number of cells in a sudoku puzzle
+constexpr int NUM_SUDOKU_CONSTRAINTS = 4; //    cell constraint, row constraint, column constraint, box constraint
+constexpr int SUDOKU_COLUMN_CONSTRAINTS = NUM_CELLS * NUM_SUDOKU_CONSTRAINTS;   //  There should be 324 column headers in a sudoku exact cover problem
 
 struct DLXNode{
     DLXNode* left;
@@ -27,7 +30,11 @@ struct DLXNode{
 
 class DLX{
     public:
+    //  generic constructor for exact cover problems
     DLX(const std::vector<std::vector<int>>& matrix);
+
+    //  specific constructor for reducing sudoku puzzles into exact cover problems
+    DLX(const std::vector<std::vector<int>>& puzzle, bool isSudokuFlag);
 
     // Debugging: Print the DLX structure
     void print();
@@ -53,9 +60,15 @@ class DLX{
     //  this method reverses the coverColumn method; it makes a previously suppressed node visible again
     void uncoverColumn(DLXNode* column);
 
-    //  TODO: this method prints a possible solution set
+    //  This method prints a possible solution set
     void printSolution();
 
-    //  TODO: this method chooses the next possible column for a solution set
+    //  This method chooses the next possible column for a solution set
     DLXNode* chooseColumn();
+
+    //  TODO: This method calculates column constraints which should be set to 1 for a given clue
+    std::vector<int> calculateColumnConstraints(std::vector<int>& inputMatrix, int sudokuRow, int sudokuColumn);
+
+    //  TODO: This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
+    int calculateRowPosition(int i, int j, int val);
 };

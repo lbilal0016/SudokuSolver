@@ -36,6 +36,47 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix){
     }
 }
 
+DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
+    //  safety mechanism
+    if(!isSudokuFlag){
+        std::cerr << "Faulty function call, if you wish to solve a sudoku puzzle, second argument should be true\n"
+        << "Exiting program ...\n";
+    }
+
+    //  create the starting point for DLX structure
+    header = new DLXNode();
+    columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
+
+    //  create column headers
+    DLXNode* prev = header;
+    for(int i = 0; i < SUDOKU_COLUMN_CONSTRAINTS; ++i){
+        DLXNode* col = new DLXNode(COLUMN_HEADER_ROW,i);
+        columnHeaders[i] = col;
+        prev->right = col;
+        prev->column = prev;
+        col->left = prev;
+        prev = col;
+    }
+    prev->right = header;
+    header->left = prev;
+
+
+
+    for(int i : matrix){
+        for(int j : matrix[i]){
+            if(matrix[i][j] == 0){
+                //  there is no clue in this coordinate, skip
+                continue;
+            }
+            int rowPosition = calculateRowPosition(i, j, matrix[i][j]);
+            std::vector<int> columnConstraints
+
+            //  add corresponding row to exact cover matrix with proper columns are equal to 1
+            addRow(calculateRowPosition(i, j, matrix[i][j]), calculateColumnConstraints(matrix, i, j));
+        }
+    }
+}
+
 void DLX::addRow(int rowID, const std::vector<int>& columns){
     DLXNode* first = nullptr;
     for(int colID : columns){
