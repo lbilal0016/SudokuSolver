@@ -1,4 +1,0 @@
-D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/ALL_BUILD.dir
-D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/ZERO_CHECK.dir
-D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/src/CMakeFiles/SudokuLib.dir
-D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/app/CMakeFiles/SudokuSolverApp.dir
