@@ -15,6 +15,7 @@ constexpr int NUM_SUDOKU_CONSTRAINTS = 4; //    cell constraint, row constraint,
 constexpr int SUDOKU_COLUMN_CONSTRAINTS = NUM_CELLS * NUM_SUDOKU_CONSTRAINTS;   //  There should be 324 column headers in a sudoku exact cover problem
 constexpr int SUDOKU_ROWS = 9;
 constexpr int SUDOKU_COLUMNS = 9;
+constexpr int SUDOKU_NUM_POSSIBILITIES = 9;
 
 struct DLXNode{
     DLXNode* left;
@@ -47,6 +48,9 @@ class DLX{
     //  This method searches for possible solutions for a given exact cover problem
     void search(int searchDepth);
 
+    //  This method is for adding rows for empty cells
+    void addRowConstraint(int i, int j, std::vec<int>& values);
+
     private:
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
@@ -69,7 +73,7 @@ class DLX{
     DLXNode* chooseColumn();
 
     //  TODO: This method calculates column constraints which should be set to 1 for a given clue
-    std::vector<int> calculateColumnConstraints(std::vector<int>& inputMatrix, int sudokuRow, int sudokuColumn);
+    std::vector<int> calculateColumnConstraints(int i, int j, int val);
 
     //  TODO: This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
     int calculateRowPosition(int i, int j, int val);

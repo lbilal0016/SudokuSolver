@@ -1,8 +1,4 @@
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/CMakeFiles/rebuild_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/src/CMakeFiles/SudokuLib.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/src/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/src/CMakeFiles/rebuild_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/app/CMakeFiles/SudokuSolverApp.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/app/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/10_Code/build/app/CMakeFiles/rebuild_cache.dir
+D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/ALL_BUILD.dir
+D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/ZERO_CHECK.dir
+D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/src/CMakeFiles/SudokuLib.dir
+D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/app/CMakeFiles/SudokuSolverApp.dir

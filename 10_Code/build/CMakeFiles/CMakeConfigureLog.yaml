@@ -663,3 +663,291 @@ events:
       Running the CXX compiler's linker: "../src/gcc-14.2.0/configure --host=x86_64-w64-mingw32 --build=x86_64-w64-mingw32 --target=x86_64-w64-mingw32 --prefix=/mingw64 --with-sysroot=/c/buildroot/x86_64-1420-posix-seh-ucrt-rt_v12-rev0/mingw64 --enable-host-shared --disable-multilib --enable-languages=c,c++,fortran,lto --enable-libstdcxx-time=yes --enable-threads=posix --enable-libgomp --enable-libatomic --enable-lto --enable-graphite --enable-checking=release --enable-fully-dynamic-string --enable-version-specific-runtime-libs --enable-libstdcxx-filesystem-ts=yes --disable-libssp --disable-libstdcxx-pch --disable-libstdcxx-debug --enable-bootstrap --disable-rpath --disable-win32-registry --disable-nls --disable-werror --disable-symvers --with-gnu-as --with-gnu-ld --with-arch=nocona --with-tune=core2 --with-libiconv --with-system-zlib --with-gmp=/c/buildroot/prerequisites/x86_64-w64-mingw32-static --with-mpfr=/c/buildroot/prerequisites/x86_64-w64-mingw32-static --with-mpc=/c/buildroot/prerequisites/x86_64-w64-mingw32-static --with-isl=/c/buildroot/prerequisites/x86_64-w64-mingw32-static --with-pkgversion='x86_64-posix-seh-rev0, Built by MinGW-Builds project' --with-bugurl=https:/github.com/niXman/mingw-builds LD_FOR_TARGET=/c/buildroot/x86_64-1420-posix-seh-ucrt-rt_v12-rev0/mingw64/bin/ld.exe" "--version"
       
 ...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      .NET Framework için Microsoft (R) Build Engine sürüm 15.9.21+g9802d43bc3
+      Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+      
+      Oluşturma başlatıldı: 6.01.2025 17:07:38.
+      1 düğümünde "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdC\\CompilerIdC.vcxproj" projesi (varsayılan hedefler).
+      PrepareForBuild:
+        "Debug\\" dizini oluşturuluyor.
+        "Debug\\CompilerIdC.tlog\\" dizini oluşturuluyor.
+      InitializeBuildStatus:
+        "AlwaysCreate" belirtildiği için "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" oluşturuluyor.
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\CL.exe /c /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc141.pdb" /Gd /TC /analyze- /FC /errorReport:queue "CMakeCCompilerId.c"
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X86 /SAFESEH "Debug\\CMakeCCompilerId.obj"
+        CompilerIdC.vcxproj -> D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdC\\.\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx86\\x86\\cl.exe
+      FinalizeBuildStatus:
+        "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" dosyası siliniyor.
+        "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate" öğesine erişiliyor.
+      "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdC\\CompilerIdC.vcxproj" Projesini Oluşturma İşlemi Tamamlandı (varsayılan hedefler).
+      
+      Oluşturma başarılı oldu.
+          0 Uyarı
+          0 Hata
+      
+      Geçen Süre 00:00:02.10
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/3.31.3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      .NET Framework için Microsoft (R) Build Engine sürüm 15.9.21+g9802d43bc3
+      Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+      
+      Oluşturma başlatıldı: 6.01.2025 17:07:41.
+      1 düğümünde "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" projesi (varsayılan hedefler).
+      PrepareForBuild:
+        "Debug\\" dizini oluşturuluyor.
+        "Debug\\CompilerIdCXX.tlog\\" dizini oluşturuluyor.
+      InitializeBuildStatus:
+        "AlwaysCreate" belirtildiği için "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" oluşturuluyor.
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\CL.exe /c /nologo /W0 /WX- /diagnostics:classic /Od /Oy- /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc141.pdb" /Gd /TP /analyze- /FC /errorReport:queue "CMakeCXXCompilerId.cpp"
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X86 /SAFESEH "Debug\\CMakeCXXCompilerId.obj"
+        CompilerIdCXX.vcxproj -> D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdCXX\\.\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\Hostx86\\x86\\cl.exe
+      FinalizeBuildStatus:
+        "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" dosyası siliniyor.
+        "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate" öğesine erişiliyor.
+      "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\3.31.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" Projesini Oluşturma İşlemi Tamamlandı (varsayılan hedefler).
+      
+      Oluşturma başarılı oldu.
+          0 Uyarı
+          0 Hata
+      
+      Geçen Süre 00:00:01.39
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/3.31.3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "D:/Ki\u015fisel \u00c7al\u0131\u015fmalar\u0131m/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-9anbup"
+      binary: "D:/Ki\u015fisel \u00c7al\u0131\u015fmalar\u0131m/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-9anbup"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-9anbup'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin/MSBuild.exe" cmTC_42c4b.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=15.0 /v:n
+        .NET Framework için Microsoft (R) Build Engine sürüm 15.9.21+g9802d43bc3
+        Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+        
+        Oluşturma başlatıldı: 6.01.2025 17:07:43.
+        1 düğümünde "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9anbup\\cmTC_42c4b.vcxproj" projesi (varsayılan hedefler).
+        PrepareForBuild:
+          "cmTC_42c4b.dir\\Debug\\" dizini oluşturuluyor.
+          "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9anbup\\Debug\\" dizini oluşturuluyor.
+          "cmTC_42c4b.dir\\Debug\\cmTC_42c4b.tlog\\" dizini oluşturuluyor.
+        InitializeBuildStatus:
+          "AlwaysCreate" belirtildiği için "cmTC_42c4b.dir\\Debug\\cmTC_42c4b.tlog\\unsuccessfulbuild" oluşturuluyor.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D _MBCS /D "WIN32" /D "_WINDOWS" /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_42c4b.dir\\Debug\\\\" /Fd"cmTC_42c4b.dir\\Debug\\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          x86 için Microsoft (R) C/C++ İyileştirmeli Derleyicisi Sürüm 19.16.27048
+          Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+          
+          CMakeCCompilerABI.c
+          cl /c /Zi /W1 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D _MBCS /D "WIN32" /D "_WINDOWS" /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_42c4b.dir\\Debug\\\\" /Fd"cmTC_42c4b.dir\\Debug\\vc141.pdb" /Gd /TC /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCCompilerABI.c"
+          
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9anbup\\Debug\\cmTC_42c4b.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-9anbup/Debug/cmTC_42c4b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-9anbup/Debug/cmTC_42c4b.lib" /MACHINE:X86  /machine:X86 "cmTC_42c4b.dir\\Debug\\CMakeCCompilerABI.obj"
+          cmTC_42c4b.vcxproj -> D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9anbup\\Debug\\cmTC_42c4b.exe
+        FinalizeBuildStatus:
+          "cmTC_42c4b.dir\\Debug\\cmTC_42c4b.tlog\\unsuccessfulbuild" dosyası siliniyor.
+          "cmTC_42c4b.dir\\Debug\\cmTC_42c4b.tlog\\cmTC_42c4b.lastbuildstate" öğesine erişiliyor.
+        "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-9anbup\\cmTC_42c4b.vcxproj" Projesini Oluşturma İşlemi Tamamlandı (varsayılan hedefler).
+        
+        Oluşturma başarılı oldu.
+            0 Uyarı
+            0 Hata
+        
+        Geçen Süre 00:00:01.88
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/HostX86/x86/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/HostX86/x86/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.16.27048.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "D:/Ki\u015fisel \u00c7al\u0131\u015fmalar\u0131m/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-v9s9ll"
+      binary: "D:/Ki\u015fisel \u00c7al\u0131\u015fmalar\u0131m/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-v9s9ll"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:X86"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-v9s9ll'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin/MSBuild.exe" cmTC_e1240.vcxproj /p:Configuration=Debug /p:Platform=Win32 /p:VisualStudioVersion=15.0 /v:n
+        .NET Framework için Microsoft (R) Build Engine sürüm 15.9.21+g9802d43bc3
+        Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+        
+        Oluşturma başlatıldı: 6.01.2025 17:07:46.
+        1 düğümünde "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v9s9ll\\cmTC_e1240.vcxproj" projesi (varsayılan hedefler).
+        PrepareForBuild:
+          "cmTC_e1240.dir\\Debug\\" dizini oluşturuluyor.
+          "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v9s9ll\\Debug\\" dizini oluşturuluyor.
+          "cmTC_e1240.dir\\Debug\\cmTC_e1240.tlog\\" dizini oluşturuluyor.
+        InitializeBuildStatus:
+          "AlwaysCreate" belirtildiği için "cmTC_e1240.dir\\Debug\\cmTC_e1240.tlog\\unsuccessfulbuild" oluşturuluyor.
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\CL.exe /c /Zi /W1 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D _MBCS /D "WIN32" /D "_WINDOWS" /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1240.dir\\Debug\\\\" /Fd"cmTC_e1240.dir\\Debug\\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          x86 için Microsoft (R) C/C++ İyileştirmeli Derleyicisi Sürüm 19.16.27048
+          Telif Hakkı (C) Microsoft Corporation. Tüm hakları saklıdır.
+          
+          cl /c /Zi /W1 /WX- /diagnostics:classic /Od /Ob0 /Oy- /D _MBCS /D "WIN32" /D "_WINDOWS" /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_e1240.dir\\Debug\\\\" /Fd"cmTC_e1240.dir\\Debug\\vc141.pdb" /Gd /TP /analyze- /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.31\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+          
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX86\\x86\\link.exe /ERRORREPORT:QUEUE /OUT:"D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v9s9ll\\Debug\\cmTC_e1240.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG:FASTLINK /PDB:"D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-v9s9ll/Debug/cmTC_e1240.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/CMakeFiles/CMakeScratch/TryCompile-v9s9ll/Debug/cmTC_e1240.lib" /MACHINE:X86  /machine:X86 "cmTC_e1240.dir\\Debug\\CMakeCXXCompilerABI.obj"
+          cmTC_e1240.vcxproj -> D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v9s9ll\\Debug\\cmTC_e1240.exe
+        FinalizeBuildStatus:
+          "cmTC_e1240.dir\\Debug\\cmTC_e1240.tlog\\unsuccessfulbuild" dosyası siliniyor.
+          "cmTC_e1240.dir\\Debug\\cmTC_e1240.tlog\\cmTC_e1240.lastbuildstate" öğesine erişiliyor.
+        "D:\\Kişisel Çalışmalarım\\DIY\\SudokuSolver\\10_Code\\build\\CMakeFiles\\CMakeScratch\\TryCompile-v9s9ll\\cmTC_e1240.vcxproj" Projesini Oluşturma İşlemi Tamamlandı (varsayılan hedefler).
+        
+        Oluşturma başarılı oldu.
+            0 Uyarı
+            0 Hata
+        
+        Geçen Süre 00:00:01.63
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/HostX86/x86/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/VC/Tools/MSVC/14.16.27023/bin/HostX86/x86/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.16.27048.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+...

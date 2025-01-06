@@ -49,8 +49,6 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
         << "Exiting program ...\n";
     }
 
-
-
     //  create the starting point for DLX structure
     header = new DLXNode();
     columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
@@ -71,7 +69,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     for(int i : matrix){
         for(int j : matrix[i]){
             if(matrix[i][j] == 0){
-                //  there is no clue in this coordinate, skip
+                /*  there is no clue in this coordinate, skip*/
                 continue;
             }else if(matrix[i][j] < 0 || matrix[i][j] > 9){
                 //  error: clue is invalid for a standard sudoku problem
@@ -80,7 +78,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
             }
 
             //  add corresponding row to exact cover matrix with proper columns are equal to 1
-            addRow(calculateRowPosition(i, j, matrix[i][j]), calculateColumnConstraints(matrix, i, j));
+            addRow(calculateRowPosition(i, j, matrix[i][j]), calculateColumnConstraints(i, j, matrix[i][j]));
         }
     }
 }
