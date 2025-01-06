@@ -42,6 +42,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
         std::cerr << "Faulty function call, if you wish to solve a sudoku puzzle, second argument should be true\n"
         << "Exiting program ...\n";
     }
+    isSudoku = isSudokuFlag;
 
     //  safety mechanism: wrong matrix size
     if(matrix.size() != SUDOKU_ROWS || matrix[0].size() != SUDOKU_COLUMNS){
@@ -174,6 +175,12 @@ void DLX::testCoverUncover(int colID){
 }
 
 void DLX::search(int searchDepth){
+    //  safety mechanism: seach method is called for a sudoku problem
+    if(isSudoku){
+        std::cerr << "Faulty class method call: for sudoku problems use solveSudokuCover method.\n"
+        << "exiting program ...\n";
+    }
+
     /*  Debugging line:
     std::cout << "Search depth: " << searchDepth << std::endl;
     */
@@ -235,6 +242,37 @@ void DLX::search(int searchDepth){
     */
 
     return;
+}
+
+void DLX::solveSudokuCover(int searchDepth){
+    //  safety mechanism: method is called for a non-sudoku problem
+    if(!isSudoku){
+        std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
+        << "exiting program ...\n";
+    }
+
+    //  eliminate sudoku puzzle clues (known values) in 0th level depth 
+    //  to force the algorithm to include clues in solution set
+    if(searchDepth == 0){
+        for(int i = 0; i < inputMatrix.size(); ++i){
+            for(int j = 0; j < inputMatrix[i].size(); ++j){
+                if(inputMatrix[i][j] != 0){
+                    std::vector<int> constraintColumns = calculateColumnConstraints(i, j, inputMatrix[i][j]);
+                    for(int col : constraintColumns){
+                        coverColumn(columnHeaders[col]);
+                    }
+                }
+            }
+        }
+    }
+
+    return;
+}
+
+void DLX::addRowConstraint(int i, int j, std::vector<int>& values){
+    for(int val : values){
+        addRow(calculateRowPosition(i, j, val), calculateColumnConstraints(i, j, val));
+    }
 }
 
 void DLX::coverColumn(DLXNode* column){
@@ -303,6 +341,40 @@ DLXNode* DLX::chooseColumn(){
     return bestColumn;
 }
 
-std::vector<int> DLX::calculateColumnConstraints(int i, int j, int val){
+std::vector<int> DLX::calculateColumnConstraints(int row, int col, int val){
+    std::vector<int> columnConstraints(NUM_SUDOKU_CONSTRAINTS);
+    
+    //  calculate cell constraint column number
+    //  Columns [0 - 80] -> Reserved for cell constraint
+    //  (row - 1) * 9 + column
+    columnConstraints[0] = (row * 9) + col;
 
+    //  calculate row constraint column number
+    //  Columns [81 - 161] -> Reserved for row constraint
+    //  Columns [81 - 89]: Reserved for values 1 - 9 in row 0, [90 - 98]: Reserved for values 1 - 9 in row 1, etc.
+    int rowColumnsBeginning = ROW_CONSTRAINT_OFFSET + (row * 9);
+    columnConstraints[1] = rowColumnsBeginning + (val - 1);
+
+    //  calculate column constraint column number
+    //  Columns [162 - 242] -> Reserved for column constraint
+    //  Columns [162 - 170]: Reserved for values 1 - 9 in column 0, [171 - 180]: Reserved for values 1 - 9 in column 1, etc.
+    int columColumnsBeginning = COLUMN_CONSTRAINT_OFFSET + (col * 9);
+    columnConstraints[2] = columColumnsBeginning + (val - 1);
+
+    //  calculate box constraint column number
+    //  Columns [243 - 323] -> Reserved for box constraint
+    //  Columns [243 - 251]: Reserved for values 1 - 9 in box 0, [252 - 260]: Reserved for values 1 - 9 in box 1, etc.
+    int boxNumber = ((row / 3) * 3) + ((col / 3) * 3);
+    int boxColumnsBeginning = BOX_CONSTRAINT_OFFSET + boxNumber;
+    columnConstraints[3] = boxColumnsBeginning + (val - 1);
+
+    return columnConstraints;
+} 
+
+int DLX::calculateRowPosition(int row, int col, int val){
+    //  General information: Each row corresponds to a specific row-column-value combination
+    //  e.g. 2nd row, 5th column (both 0 index), value 7
+    //  equation: (row * 81) + (column * 9) + (value - 1)
+
+    return (ROW_COEFFICIENT_ROW * row) + (COLUMN_COEFFICIENT_ROW * col) + (val - 1);
 }

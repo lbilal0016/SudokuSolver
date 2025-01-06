@@ -17,6 +17,13 @@ constexpr int SUDOKU_ROWS = 9;
 constexpr int SUDOKU_COLUMNS = 9;
 constexpr int SUDOKU_NUM_POSSIBILITIES = 9;
 
+constexpr int ROW_CONSTRAINT_OFFSET = 81; //    Row constraints start with column index 81
+constexpr int COLUMN_CONSTRAINT_OFFSET = 162;   //  Column constraints start with column index 162
+constexpr int BOX_CONSTRAINT_OFFSET = 243;   //  Box constraints start with column index 162
+
+constexpr int ROW_COEFFICIENT_ROW = 81;
+constexpr int COLUMN_COEFFICIENT_ROW = 9;
+
 struct DLXNode{
     DLXNode* left;
     DLXNode* right;
@@ -48,10 +55,14 @@ class DLX{
     //  This method searches for possible solutions for a given exact cover problem
     void search(int searchDepth);
 
+    //  This method searches for possible solutions for a given sudoku adaption of an exact cover problem
+    void solveSudokuCover(int searchDepht);
+
     //  This method is for adding rows for empty cells
     void addRowConstraint(int i, int j, std::vector<int>& values);
 
     private:
+    bool isSudoku = false;
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
     std::vector<DLXNode*> solutionSet;
@@ -74,8 +85,8 @@ class DLX{
     DLXNode* chooseColumn();
 
     //  TODO: This method calculates column constraints which should be set to 1 for a given clue
-    std::vector<int> calculateColumnConstraints(int i, int j, int val);
+    std::vector<int> calculateColumnConstraints(int row, int col, int val);
 
     //  TODO: This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
-    int calculateRowPosition(int i, int j, int val);
+    int calculateRowPosition(int row, int col, int val);
 };
