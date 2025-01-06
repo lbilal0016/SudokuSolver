@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Kişisel Çalışmalarım\DIY\SudokuSolver\10_Code\build\CMakeFiles\56a4cd316a96b3c036f8b337048e0e2f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D4A0C83C-7156-3784-975D-BAEFF9DC32CD}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

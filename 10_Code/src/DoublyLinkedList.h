@@ -23,7 +23,7 @@ struct DLXNode{
     DLXNode* up;
     DLXNode* down;
     DLXNode* column;
-    
+
     int rowID;
     int columnID;
 
@@ -49,13 +49,14 @@ class DLX{
     void search(int searchDepth);
 
     //  This method is for adding rows for empty cells
-    void addRowConstraint(int i, int j, std::vec<int>& values);
+    void addRowConstraint(int i, int j, std::vector<int>& values);
 
     private:
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
     std::vector<DLXNode*> solutionSet;
     int numValidSolutions;
+    std::vector<std::vector<int>> inputMatrix;
 
     //  this method adds a new row to the DLX structure
     void addRow(int rowID, const std::vector<int>& columns);

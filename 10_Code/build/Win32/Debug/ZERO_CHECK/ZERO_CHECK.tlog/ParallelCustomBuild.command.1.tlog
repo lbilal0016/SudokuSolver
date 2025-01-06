@@ -1,0 +1,10 @@
+^D:\KIŞISEL ÇALıŞMALARıM\DIY\SUDOKUSOLVER\10_CODE\BUILD\CMAKEFILES\56A4CD316A96B3C036F8B337048E0E2F\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SD:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code" "-BD:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/Kişisel Çalışmalarım/DIY/SudokuSolver/10_Code/build/SudokuSolver.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

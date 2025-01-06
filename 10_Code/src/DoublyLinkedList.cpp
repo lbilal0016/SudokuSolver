@@ -52,6 +52,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     //  create the starting point for DLX structure
     header = new DLXNode();
     columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
+    inputMatrix = matrix;
 
     //  create column headers
     DLXNode* prev = header;
@@ -66,8 +67,8 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     prev->right = header;
     header->left = prev;
 
-    for(int i : matrix){
-        for(int j : matrix[i]){
+    for(int i = 0; i < matrix.size(); ++i){
+        for(int j = 0; j < matrix[i].size(); ++j){
             if(matrix[i][j] == 0){
                 /*  there is no clue in this coordinate, skip*/
                 continue;
@@ -106,8 +107,8 @@ void DLX::addRow(int rowID, const std::vector<int>& columns){
             first->left->right = newNode;   //  new element is now to the right of previous last
             first->left = newNode;  //  new element is now to the left of the first element
         }
-        else    
-        //  meaning we are only currently adding the very first element to the current row  
+        else
+        //  meaning we are only currently adding the very first element to the current row
         {
             first = newNode;
             newNode->right = newNode;
@@ -128,7 +129,7 @@ void DLX::print(){
     for (int rowID = 0; rowID < static_cast<int>(columnHeaders.size()); ++rowID) {
         // Başlangıçta satır numarası kadar boşluk bırak
         std::cout << "Row " << rowID << ": ";
-        
+
         // Print column links in current row
         for (size_t colID = 0; colID < columnHeaders.size(); ++colID) {
             DLXNode* col = columnHeaders[colID];
@@ -185,7 +186,7 @@ void DLX::search(int searchDepth){
     }
 
     DLXNode* column = chooseColumn();//header->right;    //  TODO: Not implemented yet!
-    
+
     for(DLXNode* row = column->down; row != column; row = row->down){
         /*  Debugging line:
         std::cout << "Selected column: " << column->columnID << std::endl;
@@ -197,7 +198,7 @@ void DLX::search(int searchDepth){
         column->left->right = column->right;
         column->right->left = column->left;
         for(DLXNode* node = row->right; node != row; node = node->right){
-            coverColumn(node->column);            
+            coverColumn(node->column);
         }
 
         /*  Debugging Line
@@ -213,7 +214,7 @@ void DLX::search(int searchDepth){
         */
         search(searchDepth + 1);
         //  start from the last solution set element to repeat all steps backwards
-        DLXNode* lastSolution = solutionSet.back(); 
+        DLXNode* lastSolution = solutionSet.back();
         //  remove the last element from solution set
         solutionSet.pop_back();
         for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){
@@ -224,7 +225,7 @@ void DLX::search(int searchDepth){
         column->left->right = column;
         column->right->left = column;
     }
-    /*  if in any depth, a column not has no elements remaining downwards, 
+    /*  if in any depth, a column not has no elements remaining downwards,
     the outer for loop is skipped and search function will return without a valid solution at this point
     */
 
@@ -232,7 +233,7 @@ void DLX::search(int searchDepth){
     std::cout << "Matrix element [" << solutionSet.front()->rowID <<
     ", " << solutionSet.front()->columnID << "] is not a valid solution.\n";
     */
-   
+
     return;
 }
 
@@ -260,7 +261,7 @@ void DLX::uncoverColumn(DLXNode* column){
         //  reverse the inner for loop in coverColumn method
         for(DLXNode* node = row->left; node != row; node = node->left){
            node->up->down = node;
-           node->down->up = node;         
+           node->down->up = node;
         }
     }
 
@@ -277,7 +278,7 @@ void DLX::printSolution(){
         std::cout << "Row " << solutionElement->rowID << " covers columns: ";
         std::cout << solutionElement->columnID;
         for(DLXNode* node = solutionElement->right; node != solutionElement; node = node->right){
-            std::cout << ", " << node->columnID; 
+            std::cout << ", " << node->columnID;
         }
         std::cout << std::endl;
     }
@@ -302,3 +303,6 @@ DLXNode* DLX::chooseColumn(){
     return bestColumn;
 }
 
+std::vector<int> DLX::calculateColumnConstraints(int i, int j, int val){
+
+}
