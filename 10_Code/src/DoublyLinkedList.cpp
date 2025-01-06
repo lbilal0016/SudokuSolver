@@ -37,11 +37,19 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix){
 }
 
 DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
-    //  safety mechanism
+    //  safety mechanism: false function call
     if(!isSudokuFlag){
         std::cerr << "Faulty function call, if you wish to solve a sudoku puzzle, second argument should be true\n"
         << "Exiting program ...\n";
     }
+
+    //  safety mechanism: wrong matrix size
+    if(matrix.size() != SUDOKU_ROWS || matrix[0].size() != SUDOKU_COLUMNS){
+        std::cerr << "Provided input matrix does not correspond to a standard sudoku grid.\n"
+        << "Exiting program ...\n";
+    }
+
+
 
     //  create the starting point for DLX structure
     header = new DLXNode();
@@ -60,16 +68,16 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     prev->right = header;
     header->left = prev;
 
-
-
     for(int i : matrix){
         for(int j : matrix[i]){
             if(matrix[i][j] == 0){
                 //  there is no clue in this coordinate, skip
                 continue;
+            }else if(matrix[i][j] < 0 || matrix[i][j] > 9){
+                //  error: clue is invalid for a standard sudoku problem
+                std::cerr << "Element[" << i << ", " << j << "] is not a valid number for a sudoku puzzle.\n"
+                << "Exiting program ...\n";
             }
-            int rowPosition = calculateRowPosition(i, j, matrix[i][j]);
-            std::vector<int> columnConstraints
 
             //  add corresponding row to exact cover matrix with proper columns are equal to 1
             addRow(calculateRowPosition(i, j, matrix[i][j]), calculateColumnConstraints(matrix, i, j));

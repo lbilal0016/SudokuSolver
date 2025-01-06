@@ -13,6 +13,8 @@ constexpr int COLUMN_HEADER_ROW = -1; // row index value for column headers in D
 constexpr int NUM_CELLS = 81;   //  total number of cells in a sudoku puzzle
 constexpr int NUM_SUDOKU_CONSTRAINTS = 4; //    cell constraint, row constraint, column constraint, box constraint
 constexpr int SUDOKU_COLUMN_CONSTRAINTS = NUM_CELLS * NUM_SUDOKU_CONSTRAINTS;   //  There should be 324 column headers in a sudoku exact cover problem
+constexpr int SUDOKU_ROWS = 9;
+constexpr int SUDOKU_COLUMNS = 9;
 
 struct DLXNode{
     DLXNode* left;
