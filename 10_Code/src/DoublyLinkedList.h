@@ -23,6 +23,7 @@ constexpr int BOX_CONSTRAINT_OFFSET = 243;   //  Box constraints start with colu
 
 constexpr int ROW_COEFFICIENT_ROW = 81;
 constexpr int COLUMN_COEFFICIENT_ROW = 9;
+constexpr int SUDOKU_SOLUTION_SPACE = 81;
 
 struct DLXNode{
     DLXNode* left;
@@ -56,7 +57,7 @@ class DLX{
     void search(int searchDepth);
 
     //  This method searches for possible solutions for a given sudoku adaption of an exact cover problem
-    void solveSudokuCover(int searchDepht);
+    void solveSudokuCover(int searchDepth);
 
     //  This method is for adding rows for empty cells
     void addRowConstraint(int i, int j, std::vector<int>& values);
