@@ -211,7 +211,7 @@ void DLX::search(int searchDepth){
 
         //  add this row to the solution set, assuming it is a valid solution
         solutionSet.push_back(row);
-        //  cover the column in which solution is assumed
+        //  cover the column in which solution is assumed to be 
         column->left->right = column->right;
         column->right->left = column->left;
         for(DLXNode* node = row->right; node != row; node = node->right){
@@ -285,13 +285,41 @@ void DLX::solveSudokuCover(int searchDepth){
     }
 
     DLXNode* column = chooseColumn();   //  choose a column with minimum number of elements
+
     for(DLXNode* row = column->down; row != column; row = row->down){
         //  assuming the node we just hit is a valid partial solution, we add this (temporarily to solutionSet)
         solutionSet.push_back(row);
 
+        //  cover the column in which solution is assumed to be
+        column->left->right = column->right;
+        column->right->left = column->left;
+
+        for(DLXNode* node = row->right; node != row; node = node->right){
+            coverColumn(node->column);
+        }
+
+        /*  after the matrix is reduced, repeat the steps with a reduced matrix,
+            until a search function returns with or without a valid solution
+        */
+       solveSudokuCover(searchDepth + 1);
+
+        //  start backtracking from the last partial solution
+        DLXNode* lastSolution = solutionSet.back();
+        //  remove the last element from solutionSet
+        solutionSet.pop_back();
+        //  start uncovering from the last partial solution
+        for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){
+            uncoverColumn(node->column);
+        }
+
+        //  uncover the column in which solution has just been sought
+        column->left->right = column;
+        column->right->left = column;        
     }
 
-
+    /*  if in any depth, a column not has no elements remaining downwards,
+    the outer for loop is skipped and search function will return without a valid solution at this point
+    */
 
     return;
 }
