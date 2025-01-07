@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <stdexcept>
 
+#include "DoublyLinkedList.h"
+
 #define NUM_ROWS 9
 #define NUM_COLUMNS 9
 #define NUM_NINTHS 9
@@ -73,12 +75,11 @@ struct IndexUnknownVals{
 class sudokuSolver{
     public:
         sudokuSolver(BoardType &board, bool isSolved);
-        sudokuSolver();
 
         ~sudokuSolver();
 
         //  This function is for solving a non-finished sudoku
-        BoardType solvePuzzle(BoardType &Board);
+        BoardType solvePuzzle();
 
         //  This function is for completed sudokus, whose correctness is checked
         bool checkPuzzle();
@@ -98,7 +99,6 @@ class sudokuSolver{
         std::vector<IndexUnknownVals> _indexVecUnknownVals;
         int _nextElementUnknownValsVec;
 
-        
         //  This function returns vector index of a target element whose row and column is known
         void getIndexRange(BoardIndexRange &indexRange, int boardOneNinth);
 
@@ -119,6 +119,9 @@ class sudokuSolver{
 
         //  This function interpretes the bit position and return the real int value
         void getIntValueFromBit(int &interprtdIntVal, uint16_t bitPos);
+
+        //  This function interpretes the bit positions and returns a vector of int values represented by the bits
+        std::vector<int> getPossibleValsFromBits(int row, int column, uint16_t bitPos);
 
         //  This function checks whether a value is known, and if so, what is the value
         int isValueKnown(int row, int column);

@@ -14,20 +14,7 @@ sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _is
     markOriginals();
 }
 
-sudokuSolver::sudokuSolver(){
-    _originalsMarked = false;
-    _isSolved = false;
-    _completedColumns = 0;
-    _completedRows = 0;
-    _completedOneNinths = 0;
-
-    //  shaping member vectors
-    _board.resize(NUM_ROWS, std::vector<int>(NUM_COLUMNS, 0));  //  shaping NUM_ROWS x NUM_COLUMNS board vector
-    _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
-    _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
-}
-
-BoardType sudokuSolver::solvePuzzle(BoardType &Board){
+BoardType sudokuSolver::solvePuzzle(){
     //  ToDo:   Create a validity check against BoardType
 
     if(_originalsMarked != true){
@@ -35,18 +22,26 @@ BoardType sudokuSolver::solvePuzzle(BoardType &Board){
     markOriginals();
     }
 
-    do
-    {
-        //  First iteration should run without completeness check
-        //  all other iterations are meant, if the puzzle is not yet complete
-        
-        //  Firstly, check rows
-        checkRows();
-        //  Secondly, check columns
-        checkColumns();
-        //  Finally, check subgrids (aka oneNinths)
-        checkOneNinths();
-    } while (!checkPuzzle());
+    //  create a dlxSolver object with sudoku flag
+    DLX dlxSolver(_board, true);
+    //  Firstly, check rows
+    checkRows();
+    //  Secondly, check columns
+    checkColumns();
+    //  Finally, check subgrids (aka oneNinths)
+    checkOneNinths();
+
+    /*  after a first evaluation of sudoku with given clues, some values are already eliminated. 
+        with what is left, dlxSolver algorithm is updated   */
+    for(int row = 0; row < NUM_ROWS; ++row){
+        for(int column = 0; column < NUM_COLUMNS; ++column){
+            std::vector<int> remainingPossibleValues = getPossibleValsFromBits(row, column, _possibleValues[row][column]);
+            dlxSolver.addRowConstraint(row, column, remainingPossibleValues);
+        }
+    }
+
+    //  After applying the conditions of eliminated values to dlx algorithm, search function can be called
+    dlxSolver.solveSudokuCover(0);
 
     //  After all other operations, return the board
     return _board;
@@ -147,6 +142,22 @@ void sudokuSolver::getIntValueFromBit(int &interprtdIntVal, uint16_t bitPos){
             ++interprtdIntVal;
         }
     }
+}
+
+std::vector<int> sudokuSolver::getPossibleValsFromBits(int row, int column, uint16_t bitPos){
+    std::vector<int> possibleCellValues;
+    if(bitPos & ALLBITS == 0){
+         throw LogicalErrorOccured("No bit position set for cell\n");
+    }
+
+    for(int i = 0; i < NUM_POSSIBILITIES; ++i){
+        //  if the current 0th position of bitPos is non-zero, bit position representing (i+1) value is set 
+        if((bitPos & (1 << i)) != 0){
+            possibleCellValues.push_back(i + 1);    //  bits are 1-based
+        }
+    }
+
+    return possibleCellValues;
 }
 
 int sudokuSolver::isValueKnown(int row, int column){

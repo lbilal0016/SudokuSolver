@@ -42,10 +42,12 @@ struct DLXNode{
 class DLX{
     public:
     //  generic constructor for exact cover problems
-    DLX(const std::vector<std::vector<int>>& matrix);
+    DLX(std::vector<std::vector<int>>& matrix);
 
     //  specific constructor for reducing sudoku puzzles into exact cover problems
-    DLX(const std::vector<std::vector<int>>& puzzle, bool isSudokuFlag);
+    DLX(std::vector<std::vector<int>>& puzzle, bool isSudokuFlag);
+
+    ~DLX();
 
     // Debugging: Print the DLX structure
     void print();
@@ -64,6 +66,7 @@ class DLX{
 
     protected:
     bool isSudoku = false;
+    bool skipOtherSolutions = false;
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
     std::vector<DLXNode*> solutionSet;
@@ -85,9 +88,12 @@ class DLX{
     //  This method chooses the next possible column for a solution set
     DLXNode* chooseColumn();
 
-    //  TODO: This method calculates column constraints which should be set to 1 for a given clue
+    //  This method calculates column constraints which should be set to 1 for a given clue
     std::vector<int> calculateColumnConstraints(int row, int col, int val);
 
-    //  TODO: This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
+    //  This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
     int calculateRowPosition(int row, int col, int val);
+
+    //  TODO: This method saves the first valid solution into outputMatrix
+    void saveOutputMatrix();
 };

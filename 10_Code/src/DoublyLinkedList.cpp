@@ -1,6 +1,6 @@
 #include "DoublyLinkedList.h"
 
-DLX::DLX(const std::vector<std::vector<int>>& matrix){
+DLX::DLX(std::vector<std::vector<int>>& matrix){
     numValidSolutions = 0;
     int numColumns = matrix[0].size();
     header = new DLXNode();
@@ -36,7 +36,7 @@ DLX::DLX(const std::vector<std::vector<int>>& matrix){
     }
 }
 
-DLX::DLX(const std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
+DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     //  safety mechanism: false function call
     if(!isSudokuFlag){
         std::cerr << "Faulty function call, if you wish to solve a sudoku puzzle, second argument should be true\n"
@@ -255,22 +255,29 @@ void DLX::search(int searchDepth){
 }
 
 void DLX::solveSudokuCover(int searchDepth){
-    //  safety mechanism: method is called for a non-sudoku problem
-    if(!isSudoku){
-        std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
-        << "exiting program ...\n";
-    }
-
-    //  Check if a solution has already been found
-    if(header->right == header){
-        printSolution();    //  TODO: This must be adapted for Sudokusolver implementation
-        //  if all columns were covered successfully, function returns here, indicating a valid solution
-        return;
-    }
-
     //  eliminate sudoku puzzle clues (known values) in first function call
     //  to force the algorithm to include clues in solution set
     if(searchDepth == 0){
+        //  safety mechanism: method is called for a non-sudoku problem
+        if(!isSudoku){
+            std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
+            << "exiting program ...\n";
+        }
+
+        //  Check if a solution has already been found
+        if(header->right == header){
+            if(++numValidSolutions == 1){
+                //  save the first valid solution in output matrix
+                saveOutputMatrix();
+            }else if(numValidSolutions > 1){
+                //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
+                skipOtherSolutions = true;
+            }
+            
+            //  if all columns were covered successfully, function returns here, indicating a valid solution
+            return;
+        }
+
         for(int i = 0; i < inputMatrix.size(); ++i){
             for(int j = 0; j < inputMatrix[i].size(); ++j){
                 if(inputMatrix[i][j] != 0){
@@ -302,6 +309,11 @@ void DLX::solveSudokuCover(int searchDepth){
             until a search function returns with or without a valid solution
         */
        solveSudokuCover(searchDepth + 1);
+
+       //   A valid solution has already been found
+       if(skipOtherSolutions){
+            return;
+       }
 
         //  start backtracking from the last partial solution
         DLXNode* lastSolution = solutionSet.back();
@@ -432,4 +444,8 @@ int DLX::calculateRowPosition(int row, int col, int val){
     //  equation: (row * 81) + (column * 9) + (value - 1)
 
     return (ROW_COEFFICIENT_ROW * row) + (COLUMN_COEFFICIENT_ROW * col) + (val - 1);
+}
+
+void DLX::saveOutputMatrix(){
+
 }
