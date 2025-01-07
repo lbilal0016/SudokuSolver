@@ -62,7 +62,7 @@ class DLX{
     //  This method is for adding rows for empty cells
     void addRowConstraint(int i, int j, std::vector<int>& values);
 
-    private:
+    protected:
     bool isSudoku = false;
     DLXNode* header;
     std::vector<DLXNode*> columnHeaders;
