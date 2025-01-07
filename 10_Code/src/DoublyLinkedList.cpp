@@ -261,7 +261,14 @@ void DLX::solveSudokuCover(int searchDepth){
         << "exiting program ...\n";
     }
 
-    //  eliminate sudoku puzzle clues (known values) in 0th level depth 
+    //  Check if a solution has already been found
+    if(header->right == header){
+        printSolution();    //  TODO: This must be adapted for Sudokusolver implementation
+        //  if all columns were covered successfully, function returns here, indicating a valid solution
+        return;
+    }
+
+    //  eliminate sudoku puzzle clues (known values) in first function call
     //  to force the algorithm to include clues in solution set
     if(searchDepth == 0){
         for(int i = 0; i < inputMatrix.size(); ++i){
@@ -275,13 +282,6 @@ void DLX::solveSudokuCover(int searchDepth){
                 }
             }
         }
-    }
-
-    //  Check if a solution has already been found
-    if(header->right == header){
-        printSolution();    //  TODO: This must be adapted for Sudokusolver implementation
-        //  if all columns were covered successfully, function returns here, indicating a valid solution
-        return;
     }
 
     DLXNode* column = chooseColumn();   //  choose a column with minimum number of elements
