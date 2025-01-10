@@ -56,8 +56,12 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
 
     //  create the starting point for DLX structure
     header = new DLXNode();
+    //  in the case of a (standard) sudoku, number of columns (or number of constraints) is predefined
     columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
+    //  save a copy of input matrix here
     inputMatrix = matrix;
+    //  save the input matrix itself here
+    ptrOutputMatrix = &matrix;
 
     //  create column headers
     DLXNode* prev = header;
@@ -72,6 +76,7 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     prev->right = header;
     header->left = prev;
 
+    //  add dlx rows based on non-zero sudoku elements
     for(int i = 0; i < matrix.size(); ++i){
         for(int j = 0; j < matrix[i].size(); ++j){
             if(matrix[i][j] == 0){
@@ -83,6 +88,7 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
                 << "Exiting program ...\n";
             }
 
+            //  calculate the constraint columns created by the current sudoku element
             std::vector<int> columnsToBeCoveredConstraints = calculateColumnConstraints(i, j, matrix[i][j]);
             //  add corresponding row to exact cover matrix with proper columns are equal to 1
             addRow(calculateRowPosition(i, j, matrix[i][j]), columnsToBeCoveredConstraints);
@@ -269,9 +275,12 @@ void DLX::solveSudokuCover(int searchDepth){
             if(++numValidSolutions == 1){
                 //  save the first valid solution in output matrix
                 saveOutputMatrix();
+                //  then print the possible sudoku solution
+                printSolution();
             }else if(numValidSolutions > 1){
                 //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
                 skipOtherSolutions = true;
+                printSolution();
             }
             
             //  if all columns were covered successfully, function returns here, indicating a valid solution
@@ -376,18 +385,28 @@ void DLX::uncoverColumn(DLXNode* column){
 }
 
 void DLX::printSolution(){
-    std::cout << "A solution for exact cover problem has been found!\n";
-    std::cout << "Solution Number: " << ++numValidSolutions;
-    std::cout << "\n==================================================\n";
-    for(DLXNode* solutionElement : solutionSet){
-        std::cout << "Row " << solutionElement->rowID << " covers columns: ";
-        std::cout << solutionElement->columnID;
-        for(DLXNode* node = solutionElement->right; node != solutionElement; node = node->right){
-            std::cout << ", " << node->columnID;
+    //  print the solution for a non-sudoku exact cover problem
+    if(!isSudoku){
+        std::cout << "A solution for exact cover problem has been found!\n";
+        std::cout << "Solution Number: " << ++numValidSolutions;
+        std::cout << "\n==================================================\n";
+        for(DLXNode* solutionElement : solutionSet){
+            std::cout << "Row " << solutionElement->rowID << " covers columns: ";
+            std::cout << solutionElement->columnID;
+            for(DLXNode* node = solutionElement->right; node != solutionElement; node = node->right){
+                std::cout << ", " << node->columnID;
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
+    }else if(skipOtherSolutions){
+        //  TODO: define print actions for underdefined sudoku puzzle here
+        //  a very simple example below
+        std::cout << "It seems the sudoku puzzle is underdefined and has multiple solutions. The one printed before was one of them." << std::endl;
+    }else{
+        //  TODO: define the sudoku matrix print actions here
     }
-} //  TODO
+
+} 
 
 DLXNode* DLX::chooseColumn(){
     DLXNode* bestColumn = nullptr;
@@ -446,6 +465,16 @@ int DLX::calculateRowPosition(int row, int col, int val){
     return (ROW_COEFFICIENT_ROW * row) + (COLUMN_COEFFICIENT_ROW * col) + (val - 1);
 }
 
-void DLX::saveOutputMatrix(){
+void DLX::decodePartialSolution(int dlxRow){
+    int sudokuRow = dlxRow / ROW_COEFFICIENT_ROW;
+    int sudokuColumn = (dlxRow - (sudokuRow * ROW_COEFFICIENT_ROW)) / COLUMN_COEFFICIENT_ROW;
+    int cellValue = (dlxRow - (sudokuRow * ROW_COEFFICIENT_ROW) - (sudokuColumn  * COLUMN_COEFFICIENT_ROW)) + 1;
 
+    (*ptrOutputMatrix)[sudokuRow][sudokuColumn] = cellValue;
+}
+
+void DLX::saveOutputMatrix(){
+    for(DLXNode* partialSolution : solutionSet){
+        decodePartialSolution(partialSolution->rowID);
+    }
 }

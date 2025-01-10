@@ -43,6 +43,9 @@ BoardType sudokuSolver::solvePuzzle(){
     //  After applying the conditions of eliminated values to dlx algorithm, search function can be called
     dlxSolver.solveSudokuCover(0);
 
+    //  After dlx returns its final result, print a last line
+    std::cout << "Sudoku solver terminated with above given results.\nExiting the program ..." << std::endl;
+
     //  After all other operations, return the board
     return _board;
 }

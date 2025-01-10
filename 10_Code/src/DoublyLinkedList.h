@@ -45,7 +45,7 @@ class DLX{
     DLX(std::vector<std::vector<int>>& matrix);
 
     //  specific constructor for reducing sudoku puzzles into exact cover problems
-    DLX(std::vector<std::vector<int>>& puzzle, bool isSudokuFlag);
+    DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag);
 
     ~DLX();
 
@@ -65,13 +65,23 @@ class DLX{
     void addRowConstraint(int i, int j, std::vector<int>& values);
 
     protected:
+    //  this flag marks the problem type as sudoku
     bool isSudoku = false;
+    //  this flag is set in case of sudoku; if there are at least two valid solutions, no further solutions are sought
     bool skipOtherSolutions = false;
+    //  this node is the starting point of the dlx algorithm
     DLXNode* header;
+    //  this vector ensures that column header nodes are accessible at any time
     std::vector<DLXNode*> columnHeaders;
+    //  this vector saves the current set of nodes, which represent solution rows
     std::vector<DLXNode*> solutionSet;
+    //  this keeps track of how many solutions have been found. In case of sudoku, more than one solution means an underdefined sudoku
     int numValidSolutions;
+    //  this is a copy of input matrix to carry out operations within the dlx class
     std::vector<std::vector<int>> inputMatrix;
+    //  this pointer is for direct access to the input matrix to overwrite it at the end
+    std::vector<std::vector<int>> *ptrOutputMatrix = nullptr;
+
 
     //  this method adds a new row to the DLX structure
     void addRow(int rowID, const std::vector<int>& columns);
@@ -94,6 +104,11 @@ class DLX{
     //  This method calculates the exact DLX row for the row-column-value combination of a sudoku clue
     int calculateRowPosition(int row, int col, int val);
 
-    //  TODO: This method saves the first valid solution into outputMatrix
+    //  This method decodes a solution set into a non-binary sudoku matrix
+    void decodePartialSolution(int dlxRow);
+
+    //  This method saves the first valid solution into outputMatrix
     void saveOutputMatrix();
+
+
 };
