@@ -302,13 +302,15 @@ void DLX::search(int searchDepth){
 void DLX::solveSudokuCover(int searchDepth){
     //  Check if a solution has already been found
     if(header->right == header){
+        //  current solution is the first one to be found
         if(++numValidSolutions == 1){
             //  save the first valid solution in output matrix
             saveOutputMatrix();
             //  then print the possible sudoku solution
             printSolution();
-        }else if(numValidSolutions > 1){
-            //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
+        }
+        //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
+        else if(numValidSolutions > 1){
             skipOtherSolutions = true;
             printSolution();
         }
