@@ -101,6 +101,45 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     }
 }
 
+DLX::~DLX(){
+    //  In deconstructor, all nodes created for dlx structure must be released in memory
+    DLXNode* temp = new DLXNode();
+    for(DLXNode* column = header->left; column != header; column = column->left){
+        //  delete previous column element. The current column element is still needed
+        if(temp->up != temp){
+            delete temp->up;
+            temp->up = nullptr;
+        }
+
+        for(DLXNode* row = column->up; row != column; row = row->up){
+            //  delete previous row element. The current row element is still needed.
+            if(temp->right != temp){
+                delete temp->right;
+                temp->right = nullptr;
+            }
+            temp->right = row;
+        }
+        //  delete the last row element in the current column
+        delete temp->right;
+        temp->right = temp;
+
+        //  pass the current column element to temp to be deleted during the next iteration
+        temp->up = column;
+    }
+    //  delete the last column element
+    delete temp->up;
+    temp->up = nullptr;
+    temp->right = nullptr;
+
+    //  delete the temp itself
+    delete temp;
+    temp = nullptr;
+
+    //  delete the very last dlx element: the header
+    delete header;
+    header = nullptr;
+}
+
 void DLX::addRow(int rowID, const std::vector<int>& columns){
     DLXNode* first = nullptr;
     for(int colID : columns){
@@ -401,11 +440,24 @@ void DLX::printSolution(){
     }else if(skipOtherSolutions){
         //  TODO: define print actions for underdefined sudoku puzzle here
         //  a very simple example below
-        std::cout << "It seems the sudoku puzzle is underdefined and has multiple solutions. The one printed before was one of them." << std::endl;
+        std::cout << "It seems the sudoku puzzle is underdefined and has multiple solutions. The one printed before was one of them..." << std::endl;
     }else{
-        //  TODO: define the sudoku matrix print actions here
+        std::cout << "A solution for the given sudoku puzzle has been found!\n"
+        <<          "==========================================================\n";
+        for(int row = 0; row < SUDOKU_ROWS; ++row){
+            std::cout << "{";
+            for(int column = 0; column < SUDOKU_COLUMNS; ++column){
+                if(column == (SUDOKU_COLUMNS - 1)){
+                    //  printing the last element of the row
+                    std::cout << (*ptrOutputMatrix)[row][column];
+                }else{
+                    //  printing intermediate elements of the row
+                    std::cout << (*ptrOutputMatrix)[row][column] << ", ";
+                }
+            }
+            std::cout << "}\n";
+        }
     }
-
 } 
 
 DLXNode* DLX::chooseColumn(){
