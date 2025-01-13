@@ -35,8 +35,11 @@ BoardType sudokuSolver::solvePuzzle(){
         with what is left, dlxSolver algorithm is updated   */
     for(int row = 0; row < NUM_ROWS; ++row){
         for(int column = 0; column < NUM_COLUMNS; ++column){
-            std::vector<int> remainingPossibleValues = getPossibleValsFromBits(row, column, _possibleValues[row][column]);
-            dlxSolver.addRowConstraint(row, column, remainingPossibleValues);
+            //  add new row constraint if the value in the current cell is not known
+            if(isValueKnown(row, column) == 0){
+                std::vector<int> remainingPossibleValues = getPossibleValsFromBits(row, column, _possibleValues[row][column]);
+                dlxSolver.addRowConstraint(row, column, remainingPossibleValues);
+            }
         }
     }
 
