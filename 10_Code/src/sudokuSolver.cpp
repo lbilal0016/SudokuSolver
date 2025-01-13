@@ -49,6 +49,9 @@ BoardType sudokuSolver::solvePuzzle(){
     //  After dlx returns its final result, print a last line
     std::cout << "Sudoku solver terminated with above given results.\nExiting the program ..." << std::endl;
 
+    //  Delete dlxSolver along with all the nodes within
+    dlxSolver.~DLX();
+
     //  After all other operations, return the board
     return _board;
 }

@@ -300,6 +300,23 @@ void DLX::search(int searchDepth){
 }
 
 void DLX::solveSudokuCover(int searchDepth){
+    //  Check if a solution has already been found
+    if(header->right == header){
+        if(++numValidSolutions == 1){
+            //  save the first valid solution in output matrix
+            saveOutputMatrix();
+            //  then print the possible sudoku solution
+            printSolution();
+        }else if(numValidSolutions > 1){
+            //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
+            skipOtherSolutions = true;
+            printSolution();
+        }
+        
+        //  if all columns were covered successfully, function returns here, indicating a valid solution
+        return;
+    }
+
     //  eliminate sudoku puzzle clues (known values) in first function call
     //  to force the algorithm to include clues in solution set
     if(searchDepth == 0){
@@ -307,23 +324,6 @@ void DLX::solveSudokuCover(int searchDepth){
         if(!isSudoku){
             std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
             << "exiting program ...\n";
-        }
-
-        //  Check if a solution has already been found
-        if(header->right == header){
-            if(++numValidSolutions == 1){
-                //  save the first valid solution in output matrix
-                saveOutputMatrix();
-                //  then print the possible sudoku solution
-                printSolution();
-            }else if(numValidSolutions > 1){
-                //  if at least two valid solutions are found, sudoku is underdefined and only one solution will be given out
-                skipOtherSolutions = true;
-                printSolution();
-            }
-            
-            //  if all columns were covered successfully, function returns here, indicating a valid solution
-            return;
         }
 
         for(int i = 0; i < inputMatrix.size(); ++i){
@@ -358,7 +358,7 @@ void DLX::solveSudokuCover(int searchDepth){
         */
        solveSudokuCover(searchDepth + 1);
 
-       //   A valid solution has already been found
+       //   At least two valid solutions have been found, no more solution iterations
        if(skipOtherSolutions){
             return;
        }
