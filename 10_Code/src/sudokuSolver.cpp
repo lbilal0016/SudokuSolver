@@ -54,8 +54,16 @@ BoardType sudokuSolver::solvePuzzle(){
 }
 
 bool sudokuSolver::checkPuzzle(){
-    //  ToDo: Use the same logic for check rows, columns and one-ninths to determine
-    //  whether the puzzle is complete
+    for(int row = 0; row < SUDOKU_ROWS; ++row){
+        for(int column = 0; column < SUDOKU_COLUMNS; ++column){
+            if(_board[row][column] == 0){
+                //  there is at least one cell with an unknown value
+                return false;
+            }
+        }
+    }
+    //  all cells has valid values, puzzle is complete
+    return true;
 }
 
 void sudokuSolver::getIndexRange(BoardIndexRange &indexRange, int boardOneNinth){
