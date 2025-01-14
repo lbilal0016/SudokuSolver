@@ -14,6 +14,21 @@ sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _is
     markOriginals();
 }
 
+sudokuSolver::sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved){
+    //  ToDo: Some False argument check
+    _originalsMarked = false;
+    _completedColumns = 0;
+    _completedRows = 0;
+    _completedOneNinths = 0;
+
+    _board = convertSudokuFormat(unformattedBoard);
+    _isSolved = isSolved;
+
+    _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
+    _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
+    markOriginals();
+}
+
 BoardType sudokuSolver::solvePuzzle(){
     //  ToDo:   Create a validity check against BoardType
 
@@ -67,6 +82,25 @@ bool sudokuSolver::checkPuzzle(){
     }
     //  all cells has valid values, puzzle is complete
     return true;
+}
+
+BoardType sudokuSolver::convertSudokuFormat(std::vector<int> unformattedSudoku){
+    BoardType sudokuBoard;
+
+    //  error handling: see if the input has a right number of numbers for a sudoku puzzle
+    if(unformattedSudoku.size() != NUM_CELLS){
+        std::cerr << "Size of the input vector given to sudokuSolver does not match a standard sudoku puzzle.\n"
+        << "Program terminated ...";
+    }
+
+    //  parse a 1D vector containing 81 cells into a sudokuBoard type object
+    for(int i = 0; i < unformattedSudoku.size(); ++i){
+        int row = i / NUM_ROWS;
+        int column = i % NUM_COLUMNS;
+        sudokuBoard[row][column] = unformattedSudoku[i];
+    }
+
+    return sudokuBoard;
 }
 
 void sudokuSolver::getIndexRange(BoardIndexRange &indexRange, int boardOneNinth){

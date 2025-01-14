@@ -11,6 +11,7 @@
 #define NUM_NINTHS 9
 #define SUM_FINISHED_SUDOKU 405
 
+constexpr int NUM_CELLS = 81;
 constexpr int NUM_POSSIBILITIES = 9;
 constexpr uint16_t BITPOS_1 = 0b0000000000000001;
 constexpr uint16_t BITPOS_2 = 0b0000000000000010;
@@ -76,6 +77,8 @@ class sudokuSolver{
     public:
         sudokuSolver(BoardType &board, bool isSolved);
 
+        sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved);
+
         ~sudokuSolver();
 
         //  This function is for solving a non-finished sudoku
@@ -83,6 +86,9 @@ class sudokuSolver{
 
         //  This function is for completed sudokus, whose correctness is checked
         bool checkPuzzle();
+
+        //  This function rearranges the sudoku format
+        BoardType convertSudokuFormat(std::vector<int> unformattedSudoku);
 
     protected:
         BoardType _board;
