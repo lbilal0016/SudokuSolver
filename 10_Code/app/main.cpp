@@ -33,15 +33,14 @@ int main(int argc, char* argv[]){
     }
 
 
- std::cout << "Input argument vector:\n======================\n";
-for(int i = 0; i < parsedInput.size(); ++i){
-    if(i % 9 == 0) std::cout << "{ "; // Line beginning
-    std::cout << parsedInput[i];
-    if(i % 9 != 8) std::cout << ", "; // Adding comma
-    else std::cout << " }"; // Line end
-    if(i % 9 == 8) std::cout << "\n"; // Newline
-}
+    //  create a sudoku solver object with unsolved flag
+    sudokuSolver solver(parsedInput, false);
 
+    //  let the solver handle the sudoku puzzle
+    solver.solvePuzzle();
+
+    //  destroy sudokuSolver object
+    solver.~sudokuSolver();
 
     return 0;
 }
