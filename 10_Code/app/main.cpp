@@ -13,6 +13,7 @@ int main(int argc, char* argv[]){
         return 1;
     }
 
+
     std::string inputArg = argv[1];
     if(inputArg.size() != NUM_CELLS_SUDOKU){
         std::cerr << "Program argument should contain 81 numbers for each sudoku cell.\n";
@@ -26,15 +27,17 @@ int main(int argc, char* argv[]){
             std::cerr << "There is an invalid character in input argument: "
             << ch << std::endl
             << "Program aborted...\n";
+            return 1;
         }
 
         //  add character to parsedInput vector using ASCII code
         parsedInput.push_back(ch - '0');
     }
 
-
     //  create a sudoku solver object with unsolved flag
     sudokuSolver solver(parsedInput, false);
+
+    std::cout << "Sudoku solver started.\n";
 
     //  let the solver handle the sudoku puzzle
     solver.solvePuzzle();

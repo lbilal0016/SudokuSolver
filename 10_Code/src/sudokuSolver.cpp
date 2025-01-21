@@ -16,6 +16,11 @@ sudokuSolver::sudokuSolver(BoardType &board, bool isSolved) : _board(board), _is
 
 sudokuSolver::sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved){
     //  ToDo: Some False argument check
+    if(unformattedBoard.size() != NUM_CELLS){
+        std::cerr << "False argument input to the sudokuSolver. "
+        << "There should be 81 integers varying from 0 to 9";
+    }
+
     _originalsMarked = false;
     _completedColumns = 0;
     _completedRows = 0;
@@ -23,6 +28,7 @@ sudokuSolver::sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved){
 
     _board = convertSudokuFormat(unformattedBoard);
     _isSolved = isSolved;
+
 
     _possibleValues.resize(NUM_ROWS, std::vector<uint16_t>(NUM_COLUMNS, 0));   //  shaping NUM_ROWS x NUM_COLUMNS elements possbility vector
     _indexVecUnknownVals.resize(NUM_POSSIBILITIES, {0,0});
@@ -36,6 +42,10 @@ sudokuSolver::~sudokuSolver(){
 BoardType sudokuSolver::solvePuzzle(){
     //  ToDo:   Create a validity check against BoardType
 
+    std::cout << "Debugging line: solvePuzzle()...\n"
+    << "originalsMarked = " << _originalsMarked << std::endl;
+
+
     if(_originalsMarked != true){
     //  Marking down the original elements which are parts of the puzzle and not the solution
     markOriginals();
@@ -43,6 +53,10 @@ BoardType sudokuSolver::solvePuzzle(){
 
     //  create a dlxSolver object with sudoku flag
     DLX dlxSolver(_board, true);
+
+    /*  TEMPORARILY DISABLED CODE : START */
+    
+    /*
     //  Firstly, check rows
     checkRows();
     //  Secondly, check columns
@@ -50,8 +64,8 @@ BoardType sudokuSolver::solvePuzzle(){
     //  Finally, check subgrids (aka oneNinths)
     checkOneNinths();
 
-    /*  after a first evaluation of sudoku with given clues, some values are already eliminated. 
-        with what is left, dlxSolver algorithm is updated   */
+    //  after a first evaluation of sudoku with given clues, some values are already eliminated. 
+    //    with what is left, dlxSolver algorithm is updated   
     for(int row = 0; row < NUM_ROWS; ++row){
         for(int column = 0; column < NUM_COLUMNS; ++column){
             //  add new row constraint if the value in the current cell is not known
@@ -61,6 +75,9 @@ BoardType sudokuSolver::solvePuzzle(){
             }
         }
     }
+
+    */
+    /*  TEMPORARILY DISABLED CODE : END */
 
     //  After applying the conditions of eliminated values to dlx algorithm, search function can be called
     dlxSolver.solveSudokuCover(0);
@@ -88,8 +105,9 @@ bool sudokuSolver::checkPuzzle(){
     return true;
 }
 
-BoardType sudokuSolver::convertSudokuFormat(std::vector<int> unformattedSudoku){
+BoardType sudokuSolver::convertSudokuFormat(std::vector<int> &unformattedSudoku){
     BoardType sudokuBoard;
+    sudokuBoard.resize(NUM_ROWS, std::vector<int>(NUM_COLUMNS, 0));
 
     //  error handling: see if the input has a right number of numbers for a sudoku puzzle
     if(unformattedSudoku.size() != NUM_CELLS){
@@ -103,6 +121,7 @@ BoardType sudokuSolver::convertSudokuFormat(std::vector<int> unformattedSudoku){
         int column = i % NUM_COLUMNS;
         sudokuBoard[row][column] = unformattedSudoku[i];
     }
+    
 
     return sudokuBoard;
 }
@@ -139,13 +158,17 @@ void sudokuSolver::getIndexRange(BoardIndexRange &indexRange, int boardOneNinth)
 
 void sudokuSolver::markOriginals(){
     //  ToDo: Mark original elements
+
+    std::cout << "Debugging line: markOriginals()\n";
     for(size_t i = 0; i < NUM_ROWS; ++i){
         for(size_t j = 0; j < NUM_COLUMNS; ++j){
             if(_board[i][j] != 0){
                 //  set marker bit for elements corresponding original elements on the sudoku board
                 _possibleValues[i][j] |= MARKER_BIT;
                 //  set the original value as possible value for consistency
-                setPossibleValue(i,j,_board[i][j]);
+
+                    //  set bit number value - 1 (0th bit corresponds to value 1)
+                 _possibleValues[i][j] = _possibleValues[i][j] | (1 << (_board[i][j] - 1));
             }else{
                 //  set all possible bits for elements not corresponding original elements on the sudoku board
                 _possibleValues[i][j] |= ALLBITS;
@@ -157,11 +180,18 @@ void sudokuSolver::markOriginals(){
 }
 
 bool sudokuSolver::isOriginal(int row, int column){
+    std::cout << "Debugging line: isOriginal()\n";
+    std::cout << "\t[" << row << "][" << column << "] = " 
+    << (_possibleValues[row][column] & MARKER_BIT != 0) << std::endl;
     //  If marker bit is set, the value is original
     return _possibleValues[row][column] & MARKER_BIT != 0;
 }
 
 bool sudokuSolver::isFound(int row, int column){
+    std::cout << "Debugging line: isFound()\n";
+    std::cout << "\t[" << row << "][" << column << "] = " 
+    << (_possibleValues[row][column] & VALUE_FOUND_BIT != 0) << std::endl;
+
     //  If found bit is set, the value is found
     return _possibleValues[row][column] & VALUE_FOUND_BIT != 0;
 }
@@ -216,15 +246,18 @@ std::vector<int> sudokuSolver::getPossibleValsFromBits(int row, int column, uint
 }
 
 int sudokuSolver::isValueKnown(int row, int column){
+    std::cout << "Debugging line: isValueKnown(" << row << ", " << column << ")\n";
     int knownValue = 0;
     if(isOriginal(row,column) || isFound(row,column)){
         uint16_t valueBuf = _possibleValues[row][column] & ALLBITS;
         getIntValueFromBit(knownValue, valueBuf);
     }
+    std::cout << "\tValueKnown = " << knownValue << std::endl;
     return knownValue;
 }
 
 int sudokuSolver::isValueFound(int row, int column){
+    std::cout << "Debugging line: isValueFound()\n";
     if(isOriginal(row,column) || isFound(row,column)){
         //  Function called although value of the square is known
             throw LogicalErrorOccured("Logical error: isValueKnown function called while value of a square is known");        
@@ -250,7 +283,8 @@ int sudokuSolver::isValueFound(int row, int column){
 
     if(setBitsCounter == 0){
         // All values were eliminated somehow, there is a logical error
-        throw LogicalErrorOccured("Logical error: All values eliminated for a square");
+        std::cout << "[" << row << "][" << column << "]\n";
+        throw LogicalErrorOccured("Logical error: All values eliminated for a square.");
     }else if(setBitsCounter == 1){
         //  error check
         if(_possibleValues[row][column] & (1 << (foundValue - 1)) == 0){
@@ -270,6 +304,7 @@ int sudokuSolver::isValueFound(int row, int column){
 }
 
 void sudokuSolver::checkOneNinths(){
+    std::cout << "Debugging line: checkOneNinths()\n";
     BoardIndexRange indexRange;
     int bufKnownValCounter;
 
@@ -323,6 +358,7 @@ void sudokuSolver::checkOneNinths(){
 }
 
 void sudokuSolver::checkRows(){
+    std::cout << "Debugging line: checkRows()\n";
     int bufKnownValCounter;
     for(int i = 0; i < NUM_ROWS; ++i){
         if((_completedRows & (1 << (i - 1))) != 0){
@@ -369,6 +405,7 @@ void sudokuSolver::checkRows(){
 }
 
 void sudokuSolver::checkColumns(){
+    std::cout << "Debugging line: checkColumns()\n";
     //  i and j are intentionally swapped for vector convention 
     //  i represents rows, while j represents columns
     int bufKnownValCounter;

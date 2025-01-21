@@ -52,6 +52,8 @@ class DLX{
     // Debugging: Print the DLX structure
     void print();
 
+    void printDLXList();
+
     //  Debugging: Testing Cover and Uncover functions
     void testCoverUncover(int colID);
 

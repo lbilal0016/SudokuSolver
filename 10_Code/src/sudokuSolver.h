@@ -88,7 +88,7 @@ class sudokuSolver{
         bool checkPuzzle();
 
         //  This function rearranges the sudoku format
-        BoardType convertSudokuFormat(std::vector<int> unformattedSudoku);
+        BoardType convertSudokuFormat(std::vector<int> &unformattedSudoku);
 
     protected:
         BoardType _board;
