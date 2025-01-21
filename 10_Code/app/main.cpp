@@ -14,7 +14,7 @@ int main(int argc, char* argv[]){
     }
 
     std::string inputArg = argv[1];
-    if(inputArg.size() != NUM_CELLS){
+    if(inputArg.size() != NUM_CELLS_SUDOKU){
         std::cerr << "Program argument should contain 81 numbers for each sudoku cell.\n";
         return 1;
     }

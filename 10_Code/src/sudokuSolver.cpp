@@ -29,6 +29,10 @@ sudokuSolver::sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved){
     markOriginals();
 }
 
+sudokuSolver::~sudokuSolver(){
+    
+}
+
 BoardType sudokuSolver::solvePuzzle(){
     //  ToDo:   Create a validity check against BoardType
 
