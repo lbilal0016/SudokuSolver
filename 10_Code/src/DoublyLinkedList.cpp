@@ -2,14 +2,19 @@
 
 DLX::DLX(std::vector<std::vector<int>>& matrix){
     numValidSolutions = 0;
+    numColumns = 0;
     int numColumns = matrix[0].size();
     header = new DLXNode();
+    ++numColumns;
     columnHeaders.resize(numColumns);
+    logFile.open(projectPath + "\\log.txt", std::ios::out | std::ios::trunc);
+    std::cout << "Log file is saving at : " << projectPath << std::endl;
 
     //  create column headers
     DLXNode* prev = header;
     for(int i = 0; i < numColumns; ++i){
         DLXNode* col = new DLXNode(COLUMN_HEADER_ROW,i);
+        ++numColumns;
         columnHeaders[i] = col;
         prev->right = col;
         prev->column = prev;
@@ -43,7 +48,12 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
         << "Exiting program ...\n";
     }
     isSudoku = isSudokuFlag;
-    std::cout << "Debugging line: DLX constructor with sudoku flag.\n";
+    numColumns = 0;
+    logFile.open(projectPath + "\\log.txt", std::ios::out | std::ios::trunc);
+    std::cout << "Log file is saving at : " << projectPath << std::endl;
+
+    logFile << "Debugging line: DLX constructor with sudoku flag.\n";
+    logFile.flush();
 
     //  safety mechanism: wrong matrix size
     if(matrix.size() != SUDOKU_ROWS || matrix[0].size() != SUDOKU_COLUMNS){
@@ -57,6 +67,7 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
 
     //  create the starting point for DLX structure
     header = new DLXNode();
+    ++numColumns;
     //  in the case of a (standard) sudoku, number of columns (or number of constraints) is predefined
     columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
     //  save a copy of input matrix here
@@ -68,6 +79,7 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     DLXNode* prev = header;
     for(int i = 0; i < SUDOKU_COLUMN_CONSTRAINTS; ++i){
         DLXNode* col = new DLXNode(COLUMN_HEADER_ROW,i);
+        ++numColumns;
         columnHeaders[i] = col;
         prev->right = col;
         prev->column = prev;
@@ -77,48 +89,61 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     prev->right = header;
     header->left = prev;
 
+    /*  DEBUGGING LINE : START */
+    logFile << "\tNumber of columns after creating column headers = " << numColumns << std::endl;
+    logFile.flush();
+    /*  DEBUGGING LINE : END */
+
     //  add dlx rows based on non-zero sudoku elements
     for(int i = 0; i < matrix.size(); ++i){
         for(int j = 0; j < matrix[i].size(); ++j){
+            //  there is no clue in this coordinate, add all possible values
             if(matrix[i][j] == 0){
-                /*  there is no clue in this coordinate, skip*/
-                continue;
-            }else if(matrix[i][j] < 0 || matrix[i][j] > 9){
-                //  error: clue is invalid for a standard sudoku problem
+                for(int val = 1; val <= SUDOKU_NUM_POSSIBILITIES; ++val){
+                    logFile << "\tUnknown cell:\n\t";
+                    addRow(calculateRowPosition(i, j, val), calculateColumnConstraints(i, j, val));
+                }
+            }
+            //  error: clue is invalid for a standard sudoku problem
+            else if(matrix[i][j] < 0 || matrix[i][j] > 9){
+            
                 std::cerr << "Element[" << i << ", " << j << "] is not a valid number for a sudoku puzzle.\n"
                 << "Exiting program ...\n";
             }
+            //  there is a clue in the current cell; add only known value for this cell
+            else{
+                std::vector<int> columnsToBeCoveredConstraints = calculateColumnConstraints(i, j, matrix[i][j]);
+                //  calculate the row position of the sudoku clue
+                int rowPosition = calculateRowPosition(i, j, matrix[i][j]);
 
-            //  calculate the constraint columns created by the current sudoku element
-            std::vector<int> columnsToBeCoveredConstraints = calculateColumnConstraints(i, j, matrix[i][j]);
-            //  calculate the row position of the sudoku clue
-            int rowPosition = calculateRowPosition(i, j, matrix[i][j]);
+                /*  DEBUGGING LINE : START */
+                logFile << "\tClue:\n";
+                logFile << "\tSudoku element [" << i << "][" << j << "] = " << matrix[i][j]
+                << " | Row position = " << rowPosition << "\n\t";
+                logFile.flush();
+                /*  DEBUGGING LINE : END */
 
-            /*  DEBUGGING LINE : START */
-            std::cout << "Debugging line: DLX Constructor:\n\t";
-            std::cout << "Sudoku element [" << i << "][" << j << "] = " << matrix[i][j]
-            << " | Row position = " << rowPosition << std::endl;
-            /*  DEBUGGING LINE : END */
-
-            //  add corresponding row to exact cover matrix with proper columns are equal to 1
-            addRow(rowPosition, columnsToBeCoveredConstraints);
-            
-            /*  add the first element created by the sudoku puzzle clues directly in the solutionSet, 
-                so that algorithm is forced to include these in the solution   */
-            DLXNode* firstRowElementColumnsCovered = columnHeaders[columnsToBeCoveredConstraints[0]]->down;
-            //  so many solutions as the sudoku clues are added to the solutionSet up front
-            solutionSet.push_back(firstRowElementColumnsCovered);
+                //  add corresponding row to exact cover matrix with proper columns are equal to 1
+                addRow(rowPosition, columnsToBeCoveredConstraints);
+                
+                /*  add the first element created by the sudoku puzzle clues directly in the solutionSet, 
+                    so that algorithm is forced to include these in the solution   */
+                DLXNode* firstRowElementColumnsCovered = columnHeaders[columnsToBeCoveredConstraints[0]]->down;
+                //  so many solutions as the sudoku clues are added to the solutionSet up front
+                solutionSet.push_back(firstRowElementColumnsCovered);
+            }
         }
     }
 
 /*  DEBUGGING LINE : START */
-std::cout << "Debugging line: DLX constructor header position:\n";
-std::cout << "\tHeader->left | Column = " << header->left->columnID << ", Row = " << header->left->rowID << std::endl;
-std::cout << "\tHeader->right | Column = " << header->right->columnID << ", Row = " << header->right->rowID << std::endl;
-std::cout << "\tHeader->up | Column = " << header->up->columnID << ", Row = " << header->up->rowID << std::endl;
-std::cout << "\tHeader->down | Column = " << header->down->columnID << ", Row = " << header->down->rowID << std::endl;
-std::cout << "\tHeader->column | Column = " << header->column->columnID << ", Row = " << header->column->rowID << std::endl;
-std::cout << "\tHeader = " << header << " | Header->right = " << header->right << " | Header->left = " << header->left << std::endl;
+logFile << "Debugging line: DLX constructor header position:\n";
+logFile << "\tHeader->left | Column = " << header->left->columnID << ", Row = " << header->left->rowID << std::endl;
+logFile << "\tHeader->right | Column = " << header->right->columnID << ", Row = " << header->right->rowID << std::endl;
+logFile << "\tHeader->up | Column = " << header->up->columnID << ", Row = " << header->up->rowID << std::endl;
+logFile << "\tHeader->down | Column = " << header->down->columnID << ", Row = " << header->down->rowID << std::endl;
+logFile << "\tHeader->column | Column = " << header->column->columnID << ", Row = " << header->column->rowID << std::endl;
+logFile << "\tHeader = " << header << " | Header->right = " << header->right << " | Header->left = " << header->left << std::endl;
+logFile.flush();
 /*  DEBUGGING LINE : END */
 }
 
@@ -163,7 +188,8 @@ DLX::~DLX(){
 
 void DLX::addRow(int rowID, const std::vector<int>& columns){
 
-    std::cout << "Debugging line: addRow()\n\t";
+    logFile << "Debugging line: addRow()\n\t";
+    logFile.flush();
 
     DLXNode* first = nullptr;
     for(int colID : columns){
@@ -197,12 +223,14 @@ void DLX::addRow(int rowID, const std::vector<int>& columns){
     }
 
     /*  DEBUGGING LINE : START  */
-    std::cout << "Row " << first->rowID << " | Columns = ";
-    std::cout << first->columnID << " ";
+    logFile << "Row " << first->rowID << " | Columns = ";
+    logFile << first->columnID << " ";
+    logFile.flush();
     for(DLXNode *rowElement = first->right; rowElement != first; rowElement = rowElement->right){
-        std::cout << rowElement->columnID << " ";
+        logFile << rowElement->columnID << " ";
     }
-    std::cout << std::endl;
+    logFile << std::endl;
+    logFile.flush();
     /*  DEBUGGING LINE : END  */
 }
 
@@ -333,7 +361,8 @@ void DLX::search(int searchDepth){
 }
 
 void DLX::solveSudokuCover(int searchDepth){
-    std::cout << "Debugging line: solveSudokuCover | Depth level = " << searchDepth << ".\n";
+    logFile << "Debugging line: solveSudokuCover | Depth level = " << searchDepth << ".\n";
+    logFile.flush();
 
     //  Check if a solution has already been found
     if(header->right == header){
@@ -351,15 +380,20 @@ void DLX::solveSudokuCover(int searchDepth){
         }
         
         //  if all columns were covered successfully, function returns here, indicating a valid solution
-        std::cout << "Debugging line: solveSudokuCover | header->right == header.\n";
+        logFile << "Debugging line: solveSudokuCover | header->right == header.\n";
+        logFile.flush();
         return;
     }
 
-    std::cout << "Debugging line: solveSudokuCover | Apply sudoku clues...\n";
 
     //  eliminate sudoku puzzle clues (known values) in first function call
     //  to force the algorithm to include clues in solution set
     if(searchDepth == 0){
+        /*  DEBUGGING LINE : START  */
+        logFile << "Debugging line: solveSudokuCover | Apply sudoku clues...\n";
+        logFile.flush();
+        /*  DEBUGGING LINE : END  */
+
         //  safety mechanism: method is called for a non-sudoku problem
         if(!isSudoku){
             std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
@@ -377,39 +411,42 @@ void DLX::solveSudokuCover(int searchDepth){
                 }
             }
         }
-    }
 
-    std::cout << "Debugging line: solveSudokuCover | Apply sudoku clues done\n";
+        /*  DEBUGGING LINE : START  */
+        logFile << "Debugging line: solveSudokuCover | Apply sudoku clues done\n\n";
+        logFile.flush();
+        /*  DEBUGGING LINE : END  */
+    }
 
     DLXNode* column = chooseColumn();   //  choose a column with minimum number of elements
 
-    /*  DEBUGGING LINE : START  */
-
-    
-    /*  DEBUGGING LINE : END  */
-
-    std::cout << "Debugging line: solveSudokuCover | Main for loop in search function start\n";
+    logFile << "Debugging line: solveSudokuCover | Main for loop in search function start\n";
+    logFile << "\tDebugging line: row = " << column->down << " | column = " << column << std::endl;
+    logFile.flush();
     for(DLXNode* row = column->down; row != column; row = row->down){
         //  assuming the node we just hit is a valid partial solution, we add this (temporarily to solutionSet)
-        std::cout << "Debugging line: solveSudokuCover | Adding the first element to solution set ...\n";
+        logFile << "Debugging line: solveSudokuCover | Adding an element to solution set ...\n";
         solutionSet.push_back(row);
-        std::cout << "Debugging line: solveSudokuCover | Adding the first element to solution set done\n";
+        logFile << "Debugging line: solveSudokuCover | Adding element to solution set done\n\n";
+        logFile.flush();
 
         //  cover the column in which solution is assumed to be
         column->left->right = column->right;
         column->right->left = column->left;
 
-        std::cout << "Debugging line: solveSudokuCover | covercolumn ...\n";
+        logFile << "Debugging line: solveSudokuCover | covercolumn ...\n";
+        logFile.flush();
         for(DLXNode* node = row->right; node != row; node = node->right){
             coverColumn(node->column);
         }
-        std::cout << "Debugging line: solveSudokuCover | covercolumn done\n";
+        logFile << "Debugging line: solveSudokuCover | covercolumn done\n\n";
 
         /*  after the matrix is reduced, repeat the steps with a reduced matrix,
             until a search function returns with or without a valid solution
         */
 
-       std::cout << "Debugging line: solveSudokuCover | diving into the next depth ...\n";
+       logFile << "Debugging line: solveSudokuCover | diving into the next depth ...\n";
+       logFile.flush();
        solveSudokuCover(searchDepth + 1);
 
        //   At least two valid solutions have been found, no more solution iterations
@@ -430,7 +467,8 @@ void DLX::solveSudokuCover(int searchDepth){
         column->left->right = column;
         column->right->left = column;        
     }
-    std::cout << "Debugging line: solveSudokuCover | Main for loop in search function end\n";
+    logFile << "Debugging line: solveSudokuCover | Main for loop in search function end\n";
+    logFile.flush();
 
     /*  if in any depth, a column not has no elements remaining downwards,
     the outer for loop is skipped and search function will return without a valid solution at this point
@@ -446,8 +484,17 @@ void DLX::addRowConstraint(int i, int j, std::vector<int>& values){
 }
 
 void DLX::coverColumn(DLXNode* column){
+    /*  DEBUGGING LINE : START  */
+    logFile << "Debugging line: coverColumn()...\n";
+    logFile << "\tNumber of available columns = " << numColumns << " -> " << (numColumns - 1) << std::endl;
+    logFile.flush();
+    /*  DEBUGGING LINE : END  */
+
     column->left->right = column->right;
     column->right->left = column->left;
+    --numColumns;
+
+    
 
     //  apply this for all rows as long as row is not equal to column
     for(DLXNode* row = column->down; row != column; row = row->down){
@@ -461,9 +508,20 @@ void DLX::coverColumn(DLXNode* column){
             node->down->up = node->up;
         }
     }
+
+    /*  DEBUGGING LINE : START  */
+    logFile << "Debugging line: coverColumn() done\n\n";
+    logFile.flush();
+    /*  DEBUGGING LINE : END  */
 }
 
 void DLX::uncoverColumn(DLXNode* column){
+    /*  DEBUGGING LINE : START  */
+    logFile << "Debugging line: uncoverColumn()...\n";
+    logFile << "\tNumber of available columns = " << (numColumns - 1) << " -> " << numColumns << std::endl;
+    logFile.flush();
+    /*  DEBUGGING LINE : END  */
+
     //  reverse the outer for loop in coverColumn method
     for(DLXNode* row = column->up; row != column; row = row->up){
         //  reverse the inner for loop in coverColumn method
@@ -476,6 +534,13 @@ void DLX::uncoverColumn(DLXNode* column){
     //  update column header links (make suppressed column header reappear)
     column->left->right = column;
     column->right->left = column;
+    ++numColumns;
+    
+    
+    /*  DEBUGGING LINE : START  */
+    logFile << "Debugging line: uncoverColumn() done\n\n";
+    logFile.flush();
+    /*  DEBUGGING LINE : END  */
 }
 
 void DLX::printSolution(){
@@ -516,24 +581,35 @@ void DLX::printSolution(){
 } 
 
 DLXNode* DLX::chooseColumn(){
-    std::cout << "Debugging line: chosseColumn() | start ...\n";
-    DLXNode* bestColumn = nullptr;
+    logFile << "Debugging line: chosseColumn() | start ...\n";
+    logFile.flush();
+    DLXNode* bestColumn = header->right;
     int minColSizeSoFar = INT_MAX;
 
+    logFile << "\tNumber of visible columns = " << numColumns << std::endl;
+    logFile << "\tColumn == header ? : " << (header->right == header) << std::boolalpha << std::endl;
+    logFile.flush();
     for(DLXNode* column = header->right; column != header; column = column->right){
         //  determine the size of the current column
         int columnSize = 0;
         for(DLXNode* node = column->down; node != column; node = node->down){
             ++columnSize;
         }
-        //  check if the current column has the least number of elements so far
-        if(columnSize < minColSizeSoFar){
+        //  check if the current column has the least number of elements so far and has at least one element
+        if(columnSize < minColSizeSoFar && columnSize > 0){
             minColSizeSoFar = columnSize;
             bestColumn = column;
         }
     }
 
-    std::cout << "Debugging line: chosseColumn() | done\n";
+    /*  DEBUGGING LINE : START  */
+    logFile << "\tChosen column = " << bestColumn << std::endl;
+    logFile.flush();
+    logFile << "\tChosen column == nullptr ? : " << (bestColumn == nullptr) << std::boolalpha << std::endl;
+    logFile.flush();
+    logFile << "Debugging line: chosseColumn() | done\n\n";
+    logFile.flush();
+    /*  DEBUGGING LINE : END    */
     return bestColumn;
 }
 

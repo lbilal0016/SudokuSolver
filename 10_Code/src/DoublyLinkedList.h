@@ -7,6 +7,9 @@
 #include <iostream>
 #include <climits>
 
+#include <fstream>
+#include <filesystem>
+
 constexpr int INVALID_ROW = -999; // invalid row index
 constexpr int INVALID_COLUMN = -999; // invalid column index
 constexpr int COLUMN_HEADER_ROW = -1; // row index value for column headers in DLX data structure
@@ -75,6 +78,8 @@ class DLX{
     DLXNode* header;
     //  this vector ensures that column header nodes are accessible at any time
     std::vector<DLXNode*> columnHeaders;
+    //  this one keeps track of the number of current column headers
+    int numColumns;
     //  this vector saves the current set of nodes, which represent solution rows
     std::vector<DLXNode*> solutionSet;
     //  this keeps track of how many solutions have been found. In case of sudoku, more than one solution means an underdefined sudoku
@@ -83,6 +88,11 @@ class DLX{
     std::vector<std::vector<int>> inputMatrix;
     //  this pointer is for direct access to the input matrix to overwrite it at the end
     std::vector<std::vector<int>> *ptrOutputMatrix = nullptr;
+    //  this object gets the project directory (folder 10_Code)
+    std::string projectPath = std::filesystem::current_path().string();
+    //  this object handles log messages
+    std::ofstream logFile;
+    
 
 
     //  this method adds a new row to the DLX structure
