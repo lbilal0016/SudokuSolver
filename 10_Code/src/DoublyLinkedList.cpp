@@ -368,6 +368,12 @@ void DLX::solveSudokuCover(int searchDepth){
     //  Check if a solution has already been found
     if(header->right == header){
         //  current solution is the first one to be found
+
+        /*  DEBUGGING LINE: START   */
+        logFile << "Solution found.\n";
+        logFile.flush();
+        /*  DEBUGGING LINE: END   */
+
         if(++numValidSolutions == 1){
             //  save the first valid solution in output matrix
             saveOutputMatrix();
@@ -380,69 +386,72 @@ void DLX::solveSudokuCover(int searchDepth){
             printSolution();
         }
         
-        //  if all columns were covered successfully, function returns here, indicating a valid solution
+        /*  DEBUGGING LINE: START   */
         logFile << "Debugging line: solveSudokuCover | header->right == header.\n";
         logFile.flush();
+        /*  DEBUGGING LINE: END   */
         return;
     }
 
 
-    //  eliminate sudoku puzzle clues (known values) in first function call
-    //  to force the algorithm to include clues in solution set
-    if(searchDepth == 0){
-        /*  DEBUGGING LINE : START  */
-        logFile << "Debugging line: solveSudokuCover | Apply sudoku clues...\n";
-        logFile.flush();
-        /*  DEBUGGING LINE : END  */
+    /*  REMOVED: eliminate sudoku puzzle clues (known values) in first function call
+                to force the algorithm to include clues in solution set */
 
-        //  safety mechanism: method is called for a non-sudoku problem
-        if(!isSudoku){
-            std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
-            << "exiting program ...\n";
-        }
+    // if(searchDepth == 0){
+    //     /*  DEBUGGING LINE : START  */
+    //     logFile << "Debugging line: solveSudokuCover | Apply sudoku clues...\n";
+    //     logFile.flush();
+    //     /*  DEBUGGING LINE : END  */
 
-        for(int i = 0; i < inputMatrix.size(); ++i){
-            for(int j = 0; j < inputMatrix[i].size(); ++j){
-                if(inputMatrix[i][j] != 0){
+    //     //  safety mechanism: method is called for a non-sudoku problem
+    //     if(!isSudoku){
+    //         std::cerr << "Faulty class method call: for non-sudoku problems use search method.\n"
+    //         << "exiting program ...\n";
+    //     }
+
+
+    //     for(int i = 0; i < inputMatrix.size(); ++i){
+    //         for(int j = 0; j < inputMatrix[i].size(); ++j){
+    //             if(inputMatrix[i][j] != 0){
                     
-                    /*  DEBUGGING LINE : START  */
-                    logFile << "Sudoku clue found in position [" << i << "][" << j << "]...\n";
-                    logFile.flush();
-                    /*  DEBUGGING LINE : END  */                    
+    //                 /*  DEBUGGING LINE : START  */
+    //                 logFile << "Sudoku clue found in position [" << i << "][" << j << "]...\n";
+    //                 logFile.flush();
+    //                 /*  DEBUGGING LINE : END  */                    
 
-                    /*  DEBUGGING LINE : START  */
-                    std::vector<int> constraintColumns = calculateColumnConstraints(i, j, inputMatrix[i][j]);
-                    logFile << "\tColumn constraints in position [" << i << "][" << j << "] : "
-                    << constraintColumns[0] << " , " << constraintColumns[1] << " , " << constraintColumns[2]
-                    << " , " << constraintColumns[3] << std::endl;
-                    logFile.flush();
-                    /*  DEBUGGING LINE : END  */
+    //                 /*  DEBUGGING LINE : START  */
+    //                 std::vector<int> constraintColumns = calculateColumnConstraints(i, j, inputMatrix[i][j]);
+    //                 logFile << "\tColumn constraints in position [" << i << "][" << j << "] : "
+    //                 << constraintColumns[0] << " , " << constraintColumns[1] << " , " << constraintColumns[2]
+    //                 << " , " << constraintColumns[3] << std::endl;
+    //                 logFile.flush();
+    //                 /*  DEBUGGING LINE : END  */
 
-                    for(int col : constraintColumns){
-                        DLXNode* column = columnHeaders[col];
-                        column->left->right = column->right;
-                        column->right->left = column->left;
-                        --numColumns;
+    //                 for(int col : constraintColumns){
+    //                     DLXNode* column = columnHeaders[col];
+    //                     column->left->right = column->right;
+    //                     column->right->left = column->left;
+    //                     --numColumns;
 
-                        /*  DEBUGGING LINE : START  */
-                        logFile << "Applying sudoku clue [" << i << "][" << j << "]...\n"
-                        << "Number of columns : " << (numColumns + 1) << " -> " << numColumns << std::endl;
-                        logFile.flush();
-                        /*  DEBUGGING LINE : END  */
+    //                     /*  DEBUGGING LINE : START  */
+    //                     logFile << "Applying sudoku clue [" << i << "][" << j << "]...\n"
+    //                     << "Number of columns : " << (numColumns + 1) << " -> " << numColumns << std::endl;
+    //                     logFile.flush();
+    //                     /*  DEBUGGING LINE : END  */
 
-                        for(DLXNode* row = column->down; row != column; row = row->down){
-                            coverColumn(row->column);
-                        }
-                    }
-                }
-            }
-        }
+    //                     for(DLXNode* row = column->down; row != column; row = row->down){
+    //                         coverColumn(row->column);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        /*  DEBUGGING LINE : START  */
-        logFile << "Debugging line: solveSudokuCover | Apply sudoku clues done\n\n";
-        logFile.flush();
-        /*  DEBUGGING LINE : END  */
-    }
+    //     /*  DEBUGGING LINE : START  */
+    //     logFile << "Debugging line: solveSudokuCover | Apply sudoku clues done\n\n";
+    //     logFile.flush();
+    //     /*  DEBUGGING LINE : END  */
+    // }
 
     DLXNode* column = chooseColumn();   //  choose a column with minimum number of elements
 
