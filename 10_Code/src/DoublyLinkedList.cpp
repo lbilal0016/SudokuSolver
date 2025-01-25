@@ -100,7 +100,8 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
             //  there is no clue in this coordinate, add all possible values
             if(matrix[i][j] == 0){
                 for(int val = 1; val <= SUDOKU_NUM_POSSIBILITIES; ++val){
-                    logFile << "\tUnknown cell:\n\t";
+                    logFile << "\tUnknown cell: [" << i << "][" << j <<"] | Possible value: "
+                    << val << "\n\t";
                     addRow(calculateRowPosition(i, j, val), calculateColumnConstraints(i, j, val));
                 }
             }
@@ -403,10 +404,35 @@ void DLX::solveSudokuCover(int searchDepth){
         for(int i = 0; i < inputMatrix.size(); ++i){
             for(int j = 0; j < inputMatrix[i].size(); ++j){
                 if(inputMatrix[i][j] != 0){
+                    
+                    /*  DEBUGGING LINE : START  */
+                    logFile << "Sudoku clue found in position [" << i << "][" << j << "]...\n";
+                    logFile.flush();
+                    /*  DEBUGGING LINE : END  */                    
+
+                    /*  DEBUGGING LINE : START  */
                     std::vector<int> constraintColumns = calculateColumnConstraints(i, j, inputMatrix[i][j]);
+                    logFile << "\tColumn constraints in position [" << i << "][" << j << "] : "
+                    << constraintColumns[0] << " , " << constraintColumns[1] << " , " << constraintColumns[2]
+                    << " , " << constraintColumns[3] << std::endl;
+                    logFile.flush();
+                    /*  DEBUGGING LINE : END  */
+
                     for(int col : constraintColumns){
-                        //  cover the column to eliminate it from the rest of the solution
-                        coverColumn(columnHeaders[col]);
+                        DLXNode* column = columnHeaders[col];
+                        column->left->right = column->right;
+                        column->right->left = column->left;
+                        --numColumns;
+
+                        /*  DEBUGGING LINE : START  */
+                        logFile << "Applying sudoku clue [" << i << "][" << j << "]...\n"
+                        << "Number of columns : " << (numColumns + 1) << " -> " << numColumns << std::endl;
+                        logFile.flush();
+                        /*  DEBUGGING LINE : END  */
+
+                        for(DLXNode* row = column->down; row != column; row = row->down){
+                            coverColumn(row->column);
+                        }
                     }
                 }
             }
@@ -433,6 +459,13 @@ void DLX::solveSudokuCover(int searchDepth){
         //  cover the column in which solution is assumed to be
         column->left->right = column->right;
         column->right->left = column->left;
+        --numColumns;
+
+        /*  DEBUGGING LINE : START  */
+        logFile << "Adding a partial solution to solution set..." << std::endl
+        << "Number of columns : " << (numColumns + 1) << " -> " << numColumns << std::endl;
+        logFile.flush();
+        /*  DEBUGGING LINE : END  */
 
         logFile << "Debugging line: solveSudokuCover | covercolumn ...\n";
         logFile.flush();
