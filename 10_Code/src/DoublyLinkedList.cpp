@@ -400,10 +400,19 @@ void DLX::solveSudokuCover(int searchDepth){
     logFile.flush();
     for(DLXNode* row = column->down; row != column; row = row->down){
         //  assuming the node we just hit is a valid partial solution, we add this (temporarily to solutionSet)
-        logFile << "Debugging line: solveSudokuCover | Adding an element to solution set ...\n";
         solutionSet.push_back(row);
+
+        /*  DEBUGGING LINE : START  */
+        std::vector<int> partialSolutionDecoded(3);
+        decodePartialSolution(row->rowID, partialSolutionDecoded);
+
+        logFile << "Debugging line: solveSudokuCover | Adding an element to solution set ...\n";
+        logFile << "Added element info : Row = " << partialSolutionDecoded[0] << " | Column = " <<
+        partialSolutionDecoded[1] << " | Value = " << partialSolutionDecoded[2] << std::endl;
+
         logFile << "Debugging line: solveSudokuCover | Adding element to solution set done\n\n";
         logFile.flush();
+        /*  DEBUGGING LINE : END  */
 
         //  cover the column in which solution is assumed to be
         column->left->right = column->right;
@@ -427,9 +436,18 @@ void DLX::solveSudokuCover(int searchDepth){
             until a search function returns with or without a valid solution
         */
 
+       /*   DEBUGGING LINE : START  */
        logFile << "Debugging line: solveSudokuCover | diving into the next depth ...\n";
        logFile.flush();
+       /*   DEBUGGING LINE : END  */
+
        solveSudokuCover(searchDepth + 1);
+
+        /*   DEBUGGING LINE : START  */
+       logFile << "Debugging line: solveSudokuCover | stepping back from previous depth ...\n"
+       << "\tDepth level = " << searchDepth << ".\n";
+       logFile.flush();
+       /*   DEBUGGING LINE : END  */
 
        //   At least two valid solutions have been found, no more solution iterations
        if(skipOtherSolutions){
@@ -577,6 +595,13 @@ DLXNode* DLX::chooseColumn(){
         for(DLXNode* node = column->down; node != column; node = node->down){
             ++columnSize;
         }
+
+        /*  DEBUGGING LINE : START  */
+        
+            //  Log which column and how many elements...
+
+        /*  DEBUGGING LINE : END    */
+
         //  check if the current column has the least number of elements so far and has at least one element
         if(columnSize < minColSizeSoFar && columnSize > 0){
             minColSizeSoFar = columnSize;
@@ -639,6 +664,20 @@ void DLX::decodePartialSolution(int dlxRow){
     int cellValue = (dlxRow - (sudokuRow * ROW_COEFFICIENT_ROW) - (sudokuColumn  * COLUMN_COEFFICIENT_ROW)) + 1;
 
     (*ptrOutputMatrix)[sudokuRow][sudokuColumn] = cellValue;
+}
+
+void DLX::decodePartialSolution(int dlxRow, std::vector<int> &sudokuInformation){
+    if(sudokuInformation.size() != 3){
+        std::cerr << "Wrong usage of decodePartialSolution\n";
+    }
+    
+    int sudokuRow = dlxRow / ROW_COEFFICIENT_ROW;
+    int sudokuColumn = (dlxRow - (sudokuRow * ROW_COEFFICIENT_ROW)) / COLUMN_COEFFICIENT_ROW;
+    int cellValue = (dlxRow - (sudokuRow * ROW_COEFFICIENT_ROW) - (sudokuColumn  * COLUMN_COEFFICIENT_ROW)) + 1;
+
+    sudokuInformation[0] = sudokuRow;
+    sudokuInformation[1] = sudokuColumn;
+    sudokuInformation[2] = cellValue;
 }
 
 void DLX::saveOutputMatrix(){

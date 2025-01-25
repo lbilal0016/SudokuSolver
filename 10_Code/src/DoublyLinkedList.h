@@ -119,6 +119,9 @@ class DLX{
     //  This method decodes a solution set into a non-binary sudoku matrix
     void decodePartialSolution(int dlxRow);
 
+    //  This method returns sudoku puzzle information of a given DLX row (for debugging)
+    void decodePartialSolution(int dlxRow, std::vector<int> &sudokuInformation);
+
     //  This method saves the first valid solution into outputMatrix
     void saveOutputMatrix();
 
