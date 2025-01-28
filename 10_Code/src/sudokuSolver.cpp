@@ -56,27 +56,27 @@ BoardType sudokuSolver::solvePuzzle(){
 
     /*  TEMPORARILY DISABLED CODE : START */
     
-    /*
-    //  Firstly, check rows
-    checkRows();
-    //  Secondly, check columns
-    checkColumns();
-    //  Finally, check subgrids (aka oneNinths)
-    checkOneNinths();
+    
+    // //  Firstly, check rows
+    // checkRows();
+    // //  Secondly, check columns
+    // checkColumns();
+    // //  Finally, check subgrids (aka oneNinths)
+    // checkOneNinths();
 
-    //  after a first evaluation of sudoku with given clues, some values are already eliminated. 
-    //    with what is left, dlxSolver algorithm is updated   
-    for(int row = 0; row < NUM_ROWS; ++row){
-        for(int column = 0; column < NUM_COLUMNS; ++column){
-            //  add new row constraint if the value in the current cell is not known
-            if(isValueKnown(row, column) == 0){
-                std::vector<int> remainingPossibleValues = getPossibleValsFromBits(row, column, _possibleValues[row][column]);
-                dlxSolver.addRowConstraint(row, column, remainingPossibleValues);
-            }
-        }
-    }
+    // //  after a first evaluation of sudoku with given clues, some values are already eliminated. 
+    // //    with what is left, dlxSolver algorithm is updated   
+    // for(int row = 0; row < NUM_ROWS; ++row){
+    //     for(int column = 0; column < NUM_COLUMNS; ++column){
+    //         //  add new row constraint if the value in the current cell is not known
+    //         if(isValueKnown(row, column) == 0){
+    //             std::vector<int> remainingPossibleValues = getPossibleValsFromBits(row, column, _possibleValues[row][column]);
+    //             dlxSolver.addRowConstraint(row, column, remainingPossibleValues);
+    //         }
+    //     }
+    // }
 
-    */
+    
     /*  TEMPORARILY DISABLED CODE : END */
 
     //  After applying the conditions of eliminated values to dlx algorithm, search function can be called
@@ -345,7 +345,7 @@ void sudokuSolver::checkOneNinths(){
             int row = _indexVecUnknownVals[i].row;
             int column = _indexVecUnknownVals[i].column;
             _possibleValues[row][column] &= ~(_bufEliminatedVals);
-            if(isValueFound(row, column) !=  0){
+            if(isValueKnown(row, column) !=  0){
                 //  set the bit for found values
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
                 if((++bufKnownValCounter) == NUM_POSSIBILITIES){
@@ -392,7 +392,7 @@ void sudokuSolver::checkRows(){
             int row = _indexVecUnknownVals[i].row;
             int column = _indexVecUnknownVals[i].column;
             _possibleValues[row][column] &= ~(_bufEliminatedVals);
-            if(isValueFound(row,column) != 0){
+            if(isValueKnown(row,column) != 0){
                 // set the bit for found values
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
                 if((++bufKnownValCounter) == NUM_POSSIBILITIES){
@@ -441,7 +441,7 @@ void sudokuSolver::checkColumns(){
             int row = _indexVecUnknownVals[i].row;
             int column = _indexVecUnknownVals[i].column;
             _possibleValues[row][column] &= ~(_bufEliminatedVals);
-            if(isValueFound(row,column) != 0){
+            if(isValueKnown(row,column) != 0){
                 _possibleValues[row][column] |= VALUE_FOUND_BIT;
                 if((++bufKnownValCounter) == NUM_POSSIBILITIES){
                     //  Increase bufKnownValCounter and if it is equal to 9, mark the column as full

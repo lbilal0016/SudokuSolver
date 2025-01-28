@@ -75,6 +75,8 @@ struct IndexUnknownVals{
 
 class sudokuSolver{
     public:
+        BoardType _board;
+        
         sudokuSolver(BoardType &board, bool isSolved);
 
         sudokuSolver(std::vector<int> &unformattedBoard, bool isSolved);
@@ -91,7 +93,6 @@ class sudokuSolver{
         BoardType convertSudokuFormat(std::vector<int> &unformattedSudoku);
 
     protected:
-        BoardType _board;
         BoardPosType _possibleValues;
 
         bool _isSolved;
