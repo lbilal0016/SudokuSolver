@@ -490,6 +490,29 @@ void DLX::solveSudokuCover(int searchDepth){
         --numColumns;
 
         /*  DEBUGGING LINE : START  */
+
+        logFile << "\tCovered column : " << column->columnID << std::endl;
+        logFile << "numColumns : " << numColumns << std::endl;
+        int columnHeaders = 0;
+        for(DLXNode* column = header->right; column != header; column = column->right){
+            ++columnHeaders;
+        }
+        logFile << "columnHeaders : " << columnHeaders << std::endl;
+
+        if(numColumns < 0){
+            logFile << "Error: number of columns fell below 0 (in search function). Something is wrong.\n";
+            logFile << "\tCovered column = " << column->columnID << std::endl;
+            logFile.flush();
+        }
+
+        if(numColumns != (columnHeaders + 1)){
+            logFile << "Error: inconsistent number of columns (in search function). Something is wrong.\n";
+            logFile << "\tCovered column = " << column->columnID << std::endl;
+            logFile.flush();            
+        }
+        /*  DEBUGGING LINE : END  */                
+
+        /*  DEBUGGING LINE : START  */
         // logFile << "Adding a partial solution to solution set..." << std::endl
         // << "Number of columns : " << (numColumns + 1) << " -> " << numColumns << std::endl;
         logFile << "Debugging line: solveSudokuCover | covercolumn ...\n";
@@ -543,8 +566,9 @@ void DLX::solveSudokuCover(int searchDepth){
         }
 
         //  uncover the column in which solution has just been sought
-        column->left->right = column;
-        column->right->left = column;        
+        lastSolution->column->right->left = column;
+        lastSolution->column->left->right = column;      
+        ++numColumns;  
     }
     logFile << "Debugging line: solveSudokuCover | Main for loop in search function end\n";
     logFile.flush();
@@ -573,6 +597,29 @@ void DLX::coverColumn(DLXNode* column){
     column->right->left = column->left;
     --numColumns;
 
+
+
+    /*  DEBUGGING LINE : START  */
+    logFile << "\tCovered column : " << column->columnID << std::endl;
+    logFile << "numColumns : " << numColumns << std::endl;
+    int columnHeaders = 0;
+    for(DLXNode* column = header->right; column != header; column = column->right){
+        ++columnHeaders;
+    }
+    logFile << "columnHeaders : " << columnHeaders << std::endl;
+
+    if(numColumns < 0){
+        logFile << "Error: number of columns fell below 0 (in coverColumn). Something is wrong.\n";
+        logFile << "\tCovered column : " << column->columnID << std::endl;
+        logFile.flush();
+    }
+
+    if(numColumns != (columnHeaders + 1)){
+        logFile << "Error: inconsistent number of columns (in coverColumn function). Something is wrong.\n";
+        logFile << "\tCovered column = " << column->columnID << std::endl;
+        logFile.flush();            
+    }
+    /*  DEBUGGING LINE : END  */ 
     
 
     //  apply this for all rows as long as row is not equal to column
@@ -605,14 +652,14 @@ void DLX::uncoverColumn(DLXNode* column){
     for(DLXNode* row = column->up; row != column; row = row->up){
         //  reverse the inner for loop in coverColumn method
         for(DLXNode* node = row->left; node != row; node = node->left){
-           node->up->down = node;
-           node->down->up = node;
+            node->down->up = node;
+            node->up->down = node;
         }
     }
 
     //  update column header links (make suppressed column header reappear)
-    column->left->right = column;
     column->right->left = column;
+    column->left->right = column;
     ++numColumns;
     
     
@@ -662,11 +709,12 @@ void DLX::printSolution(){
 DLXNode* DLX::chooseColumn(){
     /*  DEBUGGING LINE : START  */    
     logFile << "Debugging line: chosseColumn() | start ...\n";
+    logFile << "Clue set empty ? : " << clueSet.empty() << std::boolalpha << std::endl;
     logFile.flush();
     /*  DEBUGGING LINE : END  */  
 
-    if(!clueSet.empty() &&
-        (clueSet.back()->column->down != clueSet.back()->column->down)){
+    if(!clueSet.empty()){
+        //&& (clueSet.back()->column->down != clueSet.back()->column->down)){
         //  see if there is a sudoku clue which should be forced into the solution set
 
         /*  DEBUGGING LINE: START   */
@@ -712,12 +760,16 @@ DLXNode* DLX::chooseColumn(){
             }
 
             /*DEBUGGING LINE : START*/
-            // logFile << "\tElements in column " << column->columnID << ": " << columnSize << std::endl;
-            // logFile.flush();
+            // if(columnSize < minColSizeSoFar && columnSize <= 0){
+            //     logFile << "Column " << column->columnID << " was not chosen because columnSize > 0 condition did not satisfy.\n";
+            //     logFile << "\tcolumnSize = " << columnSize << std::endl;
+            //     logFile.flush();
+            // }
             /*DEBUGGING LINE : END*/
             
             //  check if the current column has the least number of elements so far and has at least one element
-            if(columnSize < minColSizeSoFar && columnSize > 0){
+            if(columnSize < minColSizeSoFar){
+            //&& columnSize > 0){
                 minColSizeSoFar = columnSize;
                 bestColumn = column;
             }
