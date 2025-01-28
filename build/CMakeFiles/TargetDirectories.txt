@@ -1,8 +1,0 @@
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/CMakeFiles/rebuild_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/src/CMakeFiles/SudokuLib.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/src/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/src/CMakeFiles/rebuild_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/app/CMakeFiles/SudokuSolverApp.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/app/CMakeFiles/edit_cache.dir
-C:/Users/levent.bilal/OneDrive - intive/Desktop/SudokuSolverProject/build/app/CMakeFiles/rebuild_cache.dir
