@@ -158,8 +158,6 @@ void sudokuSolver::getIndexRange(BoardIndexRange &indexRange, int boardOneNinth)
 
 void sudokuSolver::markOriginals(){
     //  ToDo: Mark original elements
-
-    std::cout << "Debugging line: markOriginals()\n";
     for(size_t i = 0; i < NUM_ROWS; ++i){
         for(size_t j = 0; j < NUM_COLUMNS; ++j){
             if(_board[i][j] != 0){
