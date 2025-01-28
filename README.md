@@ -32,7 +32,7 @@ This project implements a sudoku solver program based on Donald Knuth's DLX (Dan
 
 ### Additional challenges
 
-## Materials and Methods
+## Materials and methods
 
 ### Exact cover problem
 
