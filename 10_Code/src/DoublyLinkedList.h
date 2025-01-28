@@ -90,8 +90,6 @@ class DLX{
     std::vector<std::vector<int>> *ptrOutputMatrix = nullptr;
     //  this object gets the project directory (folder 10_Code)
     std::string projectPath = std::filesystem::current_path().string();
-    //  this object handles log messages
-    std::ofstream logFile;
     //  This vector keeps sudoku clues to be prioritised by chooseColumn function
     std::vector<DLXNode *> clueSet;
     //  This variable keeps the size of current solution set
