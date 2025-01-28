@@ -486,7 +486,8 @@ DLXNode* DLX::chooseColumn(){
             }
             
             //  check if the current column has the least number of elements so far and has at least one element
-            if(columnSize < minColSizeSoFar && columnSize > 0){
+            if(columnSize < minColSizeSoFar){
+            // && columnSize > 0){
                 minColSizeSoFar = columnSize;
                 bestColumn = column;
             }
