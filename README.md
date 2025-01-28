@@ -1,5 +1,6 @@
 # SudokuSolver Project
 This project implements a sudoku solver program based on Donald Knuth's DLX (Dancing Links algorithm)
+
 **Author and developer:** Levent Bilal
 
 ## Table of contents
