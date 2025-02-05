@@ -273,62 +273,6 @@ void DLX::addRow(int rowID, const std::vector<int>& columns){
     }
 }
 
-void DLX::print(){
-    // Print column headers
-    std::cout << "header----";
-    for (size_t i = 0; i < columnHeaders.size(); ++i) {
-        std::cout << i << "------";
-    }
-    std::cout << std::endl;
-
-    // For each row, print column links
-    for (int rowID = 0; rowID < static_cast<int>(columnHeaders.size()); ++rowID) {
-        // Başlangıçta satır numarası kadar boşluk bırak
-        std::cout << "Row " << rowID << ": ";
-
-        // Print column links in current row
-        for (size_t colID = 0; colID < columnHeaders.size(); ++colID) {
-            DLXNode* col = columnHeaders[colID];
-            DLXNode* row = col->down;
-            bool found = false;
-
-            // Print asterix if there is a link in row
-            while (row != col) {
-                if (row->rowID == rowID) {
-                    found = true;
-                    break;
-                }
-                row = row->down;
-            }
-
-            // Print asterix or space
-            if (found) {
-                std::cout << "   *   ";
-            } else {
-                std::cout << "       ";
-            }
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-}
-
-void DLX::testCoverUncover(int colID){
-    DLXNode* columnHeader = columnHeaders[colID];
-
-    std::cout << "Starting Cover/Uncover method testing ..." << std::endl;
-    std::cout << "DLX Structure before covering column " << colID << std::endl;
-    print();
-    std::cout << std::endl;
-    coverColumn(columnHeader);
-    std::cout << "DLX Structure after covering column " << colID << std::endl;
-    print();
-    std::cout << std::endl;
-    uncoverColumn(columnHeader);
-    std::cout << "DLX Structure after uncovering column " << colID << std::endl;
-    print();
-}
-
 void DLX::search(int searchDepth){
     //  safety mechanism: seach method is called for a sudoku problem
     if(isSudoku){

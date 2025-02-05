@@ -53,15 +53,8 @@ class DLX{
     //  DLX constructor for unformatted sudoku input of type std::vector<int> 
     DLX(std::vector<int>& unformattedMatrix, bool isSudokuFlag);
 
+    //  deconstructor
     ~DLX();
-
-    // Debugging: Print the DLX structure
-    void print();
-
-    void printDLXList();
-
-    //  Debugging: Testing Cover and Uncover functions
-    void testCoverUncover(int colID);
 
     //  This method searches for possible solutions for a given exact cover problem
     void search(int searchDepth);
