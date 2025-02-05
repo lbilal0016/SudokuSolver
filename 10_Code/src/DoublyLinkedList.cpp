@@ -118,6 +118,88 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
     }
 }
 
+DLX::DLX(std::vector<int>& unformattedMatrix, bool isSudokuFlag){
+    //  safety mechanism: false function call
+    if(!isSudokuFlag){
+        std::cerr << "Faulty function call, if you wish to solve a sudoku puzzle, second argument should be true\n"
+        << "Exiting program ...\n";
+    }
+    isSudoku = isSudokuFlag;
+    numColumns = 0;
+    numValidSolutions = 0;
+
+    //  converting unformatted input matrix format into a 2D sudoku matrix format
+    std::vector<std::vector<int>> matrix = convertSudokuFormat(unformattedMatrix);
+
+    //  safety mechanism: wrong matrix size
+    if(matrix.size() != SUDOKU_ROWS || matrix[0].size() != SUDOKU_COLUMNS){
+        std::cerr << "Provided input matrix does not correspond to a standard sudoku grid.\n"
+        << "Exiting program ...\n";
+    }
+
+    /*  preformat solutionSet object to optimize memory allocation time (only valid for sudoku problems
+    which always have a fixed solution space)   */
+    //  solutionSet.resize(SUDOKU_SOLUTION_SPACE);
+    solutionSpace = 0;
+
+    //  create the starting point for DLX structure
+    header = new DLXNode();
+    ++numColumns;
+    //  in the case of a (standard) sudoku, number of columns (or number of constraints) is predefined
+    columnHeaders.resize(SUDOKU_COLUMN_CONSTRAINTS);
+    //  save a copy of input matrix here
+    inputMatrix = matrix;
+    //  save the input matrix itself here
+    ptrOutputMatrix = &matrix;
+
+    //  create column headers
+    DLXNode* prev = header;
+    for(int i = 0; i < SUDOKU_COLUMN_CONSTRAINTS; ++i){
+        DLXNode* col = new DLXNode(COLUMN_HEADER_ROW,i);
+        ++numColumns;
+        columnHeaders[i] = col;
+        prev->right = col;
+        prev->column = prev;
+        col->left = prev;
+        prev = col;
+    }
+    prev->right = header;
+    header->left = prev;
+
+    //  add dlx rows based on non-zero sudoku elements (clues)
+    for(int i = 0; i < matrix.size(); ++i){
+        for(int j = 0; j < matrix[i].size(); ++j){
+            //  there is no clue in this coordinate, add all possible values
+            if(matrix[i][j] == 0){
+                for(int val = 1; val <= SUDOKU_NUM_POSSIBILITIES; ++val){
+                    addRow(calculateRowPosition(i, j, val), calculateColumnConstraints(i, j, val));
+                }
+            }
+            //  error: clue is invalid for a standard sudoku problem
+            else if(matrix[i][j] < 0 || matrix[i][j] > 9){
+            
+                std::cerr << "Element[" << i << ", " << j << "] is not a valid number for a sudoku puzzle.\n"
+                << "Exiting program ...\n";
+            }
+            //  there is a clue in the current cell; add only known value for this cell
+            else{
+                std::vector<int> columnsToBeCoveredConstraints = calculateColumnConstraints(i, j, matrix[i][j]);
+                //  calculate the row position of the sudoku clue
+                int rowPosition = calculateRowPosition(i, j, matrix[i][j]);
+
+                //  add corresponding row to exact cover matrix with proper columns are equal to 1
+                addRow(rowPosition, columnsToBeCoveredConstraints);
+                
+                /*  add the first element created by the sudoku puzzle clues directly in the solutionSet, 
+                    so that algorithm is forced to include these in the solution   */
+                DLXNode* firstRowElementColumnsCovered = columnHeaders[columnsToBeCoveredConstraints[0]]->down;
+                //  so many solutions as the sudoku clues are added to the clue set to be prioritised by chooseColumn function
+                clueSet.push_back(firstRowElementColumnsCovered);             
+            }
+        }
+    }
+}
+
 DLX::~DLX(){
     //  In deconstructor, all nodes created for dlx structure must be released in memory
     DLXNode* temp = new DLXNode();
@@ -382,6 +464,27 @@ void DLX::addRowConstraint(int i, int j, std::vector<int>& values){
     for(int val : values){
         addRow(calculateRowPosition(i, j, val), calculateColumnConstraints(i, j, val));
     }
+}
+
+std::vector<std::vector<int>> DLX::convertSudokuFormat(std::vector<int> &unformattedSudoku){
+    std::vector<std::vector<int>> sudokuBoard;
+    sudokuBoard.resize(SUDOKU_ROWS, std::vector<int>(SUDOKU_COLUMNS, 0));
+
+    //  error handling: see if the input has a right number of numbers for a sudoku puzzle
+    if(unformattedSudoku.size() != NUM_CELLS_SUDOKU){
+        std::cerr << "Size of the input vector given to sudokuSolver does not match a standard sudoku puzzle.\n"
+        << "Program terminated ...";
+    }
+
+    //  parse a 1D vector containing 81 cells into a sudokuBoard type object
+    for(int i = 0; i < unformattedSudoku.size(); ++i){
+        int row = i / SUDOKU_ROWS;
+        int column = i % SUDOKU_COLUMNS;
+        sudokuBoard[row][column] = unformattedSudoku[i];
+    }
+    
+
+    return sudokuBoard;
 }
 
 void DLX::coverColumn(DLXNode* column){

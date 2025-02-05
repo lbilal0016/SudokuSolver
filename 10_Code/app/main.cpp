@@ -35,31 +35,19 @@ int main(int argc, char* argv[]){
         parsedInput.push_back(ch - '0');
     }
 
-    //  create a sudoku solver object with unsolved flag
-    sudokuSolver solver(parsedInput, false);
+    //  create a dlx solver object with sudoku flag
+    DLX dlxSolver(parsedInput, true);
 
     std::cout << "Sudoku solver started.\n";
 
-    BoardType boardTypeInput = solver.convertSudokuFormat(parsedInput);
-    std::cout << "Sudoku input was converted to sudoku board format.\n";
-
-    //  let the solver handle the sudoku puzzle
-    //  solver.solvePuzzle();
-
-    //  create a dlxSolver object with sudoku flag
-    DLX dlxSolver(boardTypeInput, true);
-
-    //  After applying the conditions of eliminated values to dlx algorithm, search function can be called
+    // call sudoku solver of dlx class
     dlxSolver.solveSudokuCover(0);
 
-    //  After dlx returns its final result, print a last line
+    // After dlx returns its final result, print a last line
     std::cout << "Sudoku solver terminated with above given results.\nExiting the program ..." << std::endl;
 
-    //  Delete dlxSolver along with all the nodes within
+    // Delete dlxSolver along with all the nodes within
     dlxSolver.~DLX();
-
-    //  destroy sudokuSolver object
-    solver.~sudokuSolver();
 
     return 0;
 }

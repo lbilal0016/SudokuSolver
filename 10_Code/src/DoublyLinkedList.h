@@ -50,6 +50,9 @@ class DLX{
     //  specific constructor for reducing sudoku puzzles into exact cover problems
     DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag);
 
+    //  DLX constructor for unformatted sudoku input of type std::vector<int> 
+    DLX(std::vector<int>& unformattedMatrix, bool isSudokuFlag);
+
     ~DLX();
 
     // Debugging: Print the DLX structure
@@ -68,6 +71,9 @@ class DLX{
 
     //  This method is for adding rows for empty cells
     void addRowConstraint(int i, int j, std::vector<int>& values);
+
+    //  This function rearranges the sudoku format
+    std::vector<std::vector<int>> convertSudokuFormat(std::vector<int> &unformattedSudoku);
 
     protected:
     //  this flag marks the problem type as sudoku
