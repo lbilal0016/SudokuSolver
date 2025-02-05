@@ -24,3 +24,5 @@ z.B. 530070000600195000098000060800060003400800005060000280000000060005025000130
 130 060 000
  
 Ausgabe der Lösung über die Kommandozeile als string ähnlich zur Eingabe 
+ 
+Wenn dass Sodoku mehr als eine Lösung hat dann muss eine mögliche Lösung ausgegeben werden und der Hinweis dass das Sudoku unterspezifiziert ist. 
