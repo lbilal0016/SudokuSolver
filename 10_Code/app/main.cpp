@@ -2,11 +2,16 @@
 #include <vector>
 #include <string>
 #include <filesystem>
+#include <chrono>
 
 #include "sudokuSolver.h"
 #include "DoublyLinkedList.h"
 
 int main(int argc, char* argv[]){
+
+    //  starting timer
+    auto timerStart = std::chrono::high_resolution_clock::now();
+
     //  input argument error handling
     if(argc < 2){
         std::cerr << "Input argument usage wrong.\n"
@@ -45,6 +50,15 @@ int main(int argc, char* argv[]){
 
     // After dlx returns its final result, print a last line
     std::cout << "Sudoku solver terminated with above given results.\nExiting the program ..." << std::endl;
+
+    //  stopping timer
+    auto timerEnd = std::chrono::high_resolution_clock::now();
+
+    //  getting elapsed time
+    auto timeElapsed = std::chrono::duration_cast<std::chrono::milliseconds>(timerEnd - timerStart);
+
+    //  printing elapsed time
+    std::cout << "Time elapsed from program start to printing results : " << timeElapsed.count() << " ms.\n";
 
     // Delete dlxSolver along with all the nodes within
     dlxSolver.~DLX();
