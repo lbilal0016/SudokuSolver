@@ -253,6 +253,11 @@ void DLX::addRow(int rowID, const std::vector<int>& columns){
         colHeader->up->down = newNode; //   down pointer to the previous last shows our newly added node now
         colHeader->up = newNode;    //  our newly added node is the last element in the column now
 
+        /*  DEBUGGING LINE : START  */
+        if(newNode->column == nullptr){
+            std::cout << "A node was initiated with a null column!\n"; 
+        }
+        /*  DEBUGGING LINE : END  */
 
         //  link row horizontally
         if(first != nullptr)
@@ -380,6 +385,11 @@ void DLX::search(int searchDepth){
 
 void DLX::solveSudokuCover(int searchDepth){
 
+    //   At least two valid solutions have been found, no more solution iterations
+    if(skipOtherSolutions){
+        return;
+    }
+
     if(searchDepth == 0){
         for(DLXNode* headers = header->right; headers != header; headers = headers->right){
             if(headers->down == headers){
@@ -432,21 +442,41 @@ void DLX::solveSudokuCover(int searchDepth){
 
        solveSudokuCover(searchDepth + 1);
 
-       //   At least two valid solutions have been found, no more solution iterations
-       if(skipOtherSolutions){
-            return;
+       /*   DEBUGGING LINE : START  */
+       if(numValidSolutions == 1){
+        std::cout << "numValidSolutions = 1 " << (numValidSolutions == 1) << std::boolalpha 
+        << ", searchDepth = " << searchDepth << std::endl;
        }
-
+       if(numValidSolutions > 1){
+        std::cout << "numValidSolutions > 1 " << (numValidSolutions > 1) << std::boolalpha << std::endl;
+       }
+       if(skipOtherSolutions){
+        std::cout << "skipOtherSolutions " << (skipOtherSolutions) << std::boolalpha << std::endl;
+       }
+       /*   DEBUGGING LINE : END  */
+       
         //  start backtracking from the last partial solution
-        DLXNode* lastSolution = solutionSet.back();
+        DLXNode* lastSolution = solutionSet.back();     
+
         //  remove the last element from solutionSet
         solutionSet.pop_back();
         solutionSpace--;
 
         //  start uncovering from the last partial solution
-        for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){
+        for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){ 
+
+        /*   DEBUGGING LINE : START  */
+        std::cout << "node = " << node << std::endl;
+        std::cout << "node->column = " << node->column << std::endl;
+        /*   DEBUGGING LINE : END  */
+
             uncoverColumn(node->column);
         }
+
+        /*   DEBUGGING LINE : START  */
+        std::cout << "for(){uncoverColumn();} successful\n";
+       /*   DEBUGGING LINE : END  */  
+
 
         //  uncover the column in which solution has just been sought
         column->left->right = column;
@@ -510,6 +540,11 @@ void DLX::coverColumn(DLXNode* column){
 }
 
 void DLX::uncoverColumn(DLXNode* column){
+
+    /*   DEBUGGING LINE : START  */
+    std::cout << "uncoverColumn DLXNode : " << column << "\n";
+    /*   DEBUGGING LINE : END  */ 
+
     //  reverse the outer for loop in coverColumn method
     for(DLXNode* row = column->up; row != column; row = row->up){
         //  reverse the inner for loop in coverColumn method
@@ -518,6 +553,8 @@ void DLX::uncoverColumn(DLXNode* column){
            node->down->up = node;
         }
     }
+
+
 
     //  update column header links (make suppressed column header reappear)
     column->left->right = column;
@@ -564,7 +601,7 @@ void DLX::printSolution(){
 
 DLXNode* DLX::chooseColumn(){
     if(!clueSet.empty() &&
-        (clueSet.back()->column->down != clueSet.back()->column->down)){
+        (clueSet.back()->column->down != clueSet.back()->column)){
         //  see if there is a sudoku clue which should be forced into the solution set
         
         DLXNode* chosenClue = clueSet.back();
