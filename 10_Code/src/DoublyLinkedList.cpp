@@ -323,13 +323,6 @@ void DLX::search(int searchDepth){
 }
 
 void DLX::solveSudokuCover(int searchDepth){
-
-    //   At least two valid solutions have been found, no more solution iterations
-    if(skipOtherSolutions){
-        return;
-    }
-
-
     if(searchDepth == 0){
         for(DLXNode* headers = header->right; headers != header; headers = headers->right){
             if(headers->down == headers){
@@ -381,6 +374,11 @@ void DLX::solveSudokuCover(int searchDepth){
         */
 
        solveSudokuCover(searchDepth + 1);
+       
+        //   At least two valid solutions have been found, no more solution iterations
+        if(skipOtherSolutions){
+            return;
+        }
 
         //  start backtracking from the last partial solution
         DLXNode* lastSolution = solutionSet.back();
