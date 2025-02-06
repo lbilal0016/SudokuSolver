@@ -80,6 +80,12 @@ DLX::DLX(std::vector<std::vector<int>>& matrix, bool isSudokuFlag){
         prev->column = prev;
         col->left = prev;
         prev = col;
+
+        /*  DEBUGGING LINE  */
+        if(prev->column == nullptr){
+            std::cout << "DLX constructor : A node was initiated with an unvalid column!\n";
+        }
+        /*  DEBUGGING LINE  */
     }
     prev->right = header;
     header->left = prev;
@@ -152,6 +158,11 @@ DLX::DLX(std::vector<int>& unformattedMatrix, bool isSudokuFlag){
     //  save the input matrix itself here
     ptrOutputMatrix = &matrix;
 
+    /*  DEBUGGING LINE  */
+    // int totalNodes = 0;
+    // int invalidColumnNodes = 0;
+    /*  DEBUGGING LINE  */
+
     //  create column headers
     DLXNode* prev = header;
     for(int i = 0; i < SUDOKU_COLUMN_CONSTRAINTS; ++i){
@@ -159,9 +170,19 @@ DLX::DLX(std::vector<int>& unformattedMatrix, bool isSudokuFlag){
         ++numColumns;
         columnHeaders[i] = col;
         prev->right = col;
-        prev->column = prev;
+        col->column = col;
         col->left = prev;
         prev = col;
+
+
+        /*  DEBUGGING LINE  */
+        // ++totalNodes;
+        // if(prev->column == nullptr){
+        //     std::cout << "DLX constructor : A node was initiated with an unvalid column! "
+        //     << ++invalidColumnNodes << " / " << totalNodes << " are invalid so far.\n";
+        // }
+        /*  DEBUGGING LINE  */
+
     }
     prev->right = header;
     header->left = prev;
@@ -253,6 +274,11 @@ void DLX::addRow(int rowID, const std::vector<int>& columns){
         colHeader->up->down = newNode; //   down pointer to the previous last shows our newly added node now
         colHeader->up = newNode;    //  our newly added node is the last element in the column now
 
+        /*  DEBUGGING LINE  */
+        if(newNode->column == nullptr){
+            std::cout << "addRow : A node was initiated with an unvalid column!\n";
+        }
+        /*  DEBUGGING LINE  */
 
         //  link row horizontally
         if(first != nullptr)
@@ -323,13 +349,6 @@ void DLX::search(int searchDepth){
 }
 
 void DLX::solveSudokuCover(int searchDepth){
-
-    //   At least two valid solutions have been found, no more solution iterations
-    if(skipOtherSolutions){
-        return;
-    }
-
-
     if(searchDepth == 0){
         for(DLXNode* headers = header->right; headers != header; headers = headers->right){
             if(headers->down == headers){
@@ -382,6 +401,11 @@ void DLX::solveSudokuCover(int searchDepth){
 
        solveSudokuCover(searchDepth + 1);
 
+        //   At least two valid solutions have been found, no more solution iterations
+        if(skipOtherSolutions){
+            return;
+        }
+
         //  start backtracking from the last partial solution
         DLXNode* lastSolution = solutionSet.back();
         //  remove the last element from solutionSet
@@ -390,6 +414,11 @@ void DLX::solveSudokuCover(int searchDepth){
 
         //  start uncovering from the last partial solution
         for(DLXNode* node = lastSolution->left; node != lastSolution; node = node->left){
+            /*  DEBUGGING LINE  */
+            if(node->column == nullptr){
+            std::cout << "node->column == nullptr ? " << (node->column == nullptr) << std::boolalpha;
+            }
+            /*  DEBUGGING LINE  */
             uncoverColumn(node->column);
         }
 
